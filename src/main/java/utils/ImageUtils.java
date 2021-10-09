@@ -22,8 +22,7 @@ public class ImageUtils {
 
     private Image _getImage(String filename) {
         try {
-            return ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(
-                    "/" + filename)));
+            return ImageIO.read(getClass().getResourceAsStream("/" + filename));
         } catch (IOException e) {
             e.printStackTrace();
             return null;

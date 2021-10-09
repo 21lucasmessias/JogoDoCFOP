@@ -13,7 +13,7 @@ public class Jogo {
     private static Jogo instancia;
     private int fase;
 
-    public Jogo() {
+    private Jogo() {
         this.status = 1;
         this.pontuacao = 0;
         this.perguntas = 1;

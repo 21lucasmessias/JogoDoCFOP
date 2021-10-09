@@ -1,18 +1,23 @@
 package login;
 
 import jogo.Jogo;
-import menu.MenuPrincipal;
-import utils.ImageUtils;
-import utils.telaCadastro;
+import home.Home;
+import org.jdesktop.layout.GroupLayout;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
+import static java.awt.Font.PLAIN;
+import static javax.swing.JOptionPane.showMessageDialog;
+import static javax.swing.SwingConstants.CENTER;
+import static utils.ImageUtils.getImage;
 
 public class Login extends JFrame {
 
@@ -25,26 +30,6 @@ public class Login extends JFrame {
 
         createUIComponents();
         fillLogin();
-    }
-
-    public static void main(String[] args) {
-
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MenuPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Login().setVisible(true);
-            }
-        });
     }
 
     private void fillLogin() {
@@ -67,174 +52,161 @@ public class Login extends JFrame {
         }
     }
 
-    private void btnSairMouseClicked(java.awt.event.MouseEvent evt) {
+    private void handleExitPress(MouseEvent evt) {
         System.exit(0);
     }
 
-    private void btnEntrarMouseClicked(java.awt.event.MouseEvent evt) {
-        realizarLogin();
+    private void handleLoginPress(MouseEvent evt) {
+        login();
     }
 
-    private void btnCadastrarContaMouseClicked(java.awt.event.MouseEvent evt) {
-        telaCadastro novaConta = new telaCadastro();
-        novaConta.setLocationRelativeTo(null);
-        novaConta.setVisible(true);
+    private void handleRegisterPress(MouseEvent evt) {
+        Register newAccount = new Register();
+        newAccount.setLocationRelativeTo(null);
+        newAccount.setVisible(true);
         this.dispose();
     }
 
-    private void inputSenhaKeyPressed(KeyEvent evt) {
+    private void handleEnterPress(KeyEvent evt) {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            realizarLogin();
+            login();
         }
     }
 
-    private boolean validarDados() {
+    private boolean isFormValid() {
         if (inputEmail.getText().length() < 7) {
-            JOptionPane.showMessageDialog(null, "E-mail invalido.");
+            showMessageDialog(null, "E-mail invalido.");
             return false;
         } else if (inputPassword.getPassword().length < 5) {
-            JOptionPane.showMessageDialog(null, "A senha precisa ter no mínimo 5 caracteres.");
+            showMessageDialog(null, "A senha precisa ter no mínimo 5 caracteres.");
             return false;
         }
         return true;
     }
 
-    private void realizarLogin() {
-        if (validarDados()) {
+    private void login() {
+        if (isFormValid()) {
             File f = new File(inputEmail.getText() + ".txt");
             if (f.exists()) {
                 try (BufferedReader in = new BufferedReader(new FileReader(inputEmail.getText() + ".txt"))) {
                     String str;
-                    String[] conta = null;
+                    String[] account = {"", ""};
                     String strPass = new String(inputPassword.getPassword()).trim();
+
                     while ((str = in.readLine()) != null) {
-                        conta = str.split(",");
-                        System.out.println(str);
+                        account = str.split(",");
                     }
-                    if (conta[1].equals(strPass)) {
-                        Jogo jogoAtual = Jogo.getInstance();
-                        jogoAtual.setLogin(inputEmail.getText());
-                        MenuPrincipal jogo = new MenuPrincipal(conta);
+                    if (account[1].equals(strPass)) {
+                        Jogo game = Jogo.getInstance();
+                        game.setLogin(inputEmail.getText());
+                        Home jogo = new Home(account);
                         jogo.setLocationRelativeTo(null);
                         jogo.setVisible(true);
                         this.dispose();
                     } else {
-                        JOptionPane.showMessageDialog(null, "Senha incorreta.");
+                        showMessageDialog(null, "Senha incorreta.");
                         inputPassword.setText("");
                     }
                 } catch (IOException e) {
                     System.out.println("File Read Error");
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Essa conta não existe.");
+                showMessageDialog(null, "Essa conta não existe.");
             }
         }
     }
 
     private void createUIComponents() {
-        JPanel jPanel1 = new JPanel();
+        mainPanel = new JPanel();
+        inputEmail = new JTextField();
+        inputPassword = new JPasswordField();
         JLabel titleLeft = new JLabel();
         JLabel tituloLogin = new JLabel();
         JLabel tituloEmail = new JLabel();
-        inputEmail = new JTextField();
-        JLabel tituloSenha = new JLabel();
-        inputPassword = new JPasswordField();
-        JLabel btnEntrar = new JLabel();
-        JLabel btnCadastrarConta = new JLabel();
-        JLabel fundoLogin = new JLabel();
-        JLabel madeText = new JLabel();
-        JLabel btnSair = new JLabel();
+        JLabel tituloPassword = new JLabel();
+        JLabel btnLogin = new JLabel();
+        JLabel btnRegister = new JLabel();
+        JLabel btnExit = new JLabel();
         JLabel background = new JLabel();
+        JLabel backgroundContent = new JLabel();
 
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
         setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         setResizable(false);
 
-        jPanel1.setLayout(null);
+        mainPanel.setLayout(null);
 
-        titleLeft.setIcon(new ImageIcon(ImageUtils.getImage("title_left.png")));
-        jPanel1.add(titleLeft);
+        titleLeft.setIcon(new ImageIcon(getImage("title_left.png")));
+        mainPanel.add(titleLeft);
         titleLeft.setBounds(20, 20, 216, 34);
 
-        tituloLogin.setFont(new java.awt.Font("Krungthep", 0, 24)); // NOI18N
-        tituloLogin.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        tituloLogin.setFont(new Font("Krungthep", PLAIN, 24));
+        tituloLogin.setHorizontalAlignment(CENTER);
         tituloLogin.setText("Login");
-        jPanel1.add(tituloLogin);
+        mainPanel.add(tituloLogin);
         tituloLogin.setBounds(610, 150, 100, 50);
 
-        tituloEmail.setFont(new java.awt.Font("Krungthep", 0, 18)); // NOI18N
+        tituloEmail.setFont(new Font("Krungthep", PLAIN, 18));
         tituloEmail.setText("E-MAIL:");
-        jPanel1.add(tituloEmail);
+        mainPanel.add(tituloEmail);
         tituloEmail.setBounds(370, 270, 110, 24);
 
-        inputEmail.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        jPanel1.add(inputEmail);
+        inputEmail.setFont(new Font("Roboto", PLAIN, 18));
+        mainPanel.add(inputEmail);
         inputEmail.setBounds(490, 260, 480, 40);
 
-        tituloSenha.setFont(new java.awt.Font("Krungthep", 0, 18)); // NOI18N
-        tituloSenha.setText("SENHA:");
-        jPanel1.add(tituloSenha);
-        tituloSenha.setBounds(370, 360, 110, 24);
+        tituloPassword.setFont(new Font("Krungthep", PLAIN, 18));
+        tituloPassword.setText("SENHA:");
+        mainPanel.add(tituloPassword);
+        tituloPassword.setBounds(370, 360, 110, 24);
 
         inputPassword.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(KeyEvent evt) {
-                inputSenhaKeyPressed(evt);
+                handleEnterPress(evt);
             }
         });
-        jPanel1.add(inputPassword);
+        mainPanel.add(inputPassword);
         inputPassword.setBounds(490, 350, 480, 40);
 
-        btnEntrar.setIcon(new ImageIcon(ImageUtils.getImage("botaoEntrar.png")));
-        btnEntrar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnEntrarMouseClicked(evt);
+        btnLogin.setIcon(new ImageIcon(getImage("botaoEntrar.png")));
+        btnLogin.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent evt) {
+                handleLoginPress(evt);
             }
         });
-        jPanel1.add(btnEntrar);
-        btnEntrar.setBounds(440, 470, 180, 50);
+        mainPanel.add(btnLogin);
+        btnLogin.setBounds(440, 470, 180, 50);
 
-        btnCadastrarConta.setIcon(new ImageIcon(ImageUtils.getImage("botaoCriarConta.png")));
-        btnCadastrarConta.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnCadastrarContaMouseClicked(evt);
+        btnRegister.setIcon(new ImageIcon(getImage("botaoCriarConta.png")));
+        btnRegister.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent evt) {
+                handleRegisterPress(evt);
             }
         });
-        jPanel1.add(btnCadastrarConta);
-        btnCadastrarConta.setBounds(680, 470, 240, 50);
+        mainPanel.add(btnRegister);
+        btnRegister.setBounds(680, 470, 240, 50);
 
-        fundoLogin.setIcon(new ImageIcon(ImageUtils.getImage("backgroundConquistas.png")));
-        jPanel1.add(fundoLogin);
-        fundoLogin.setBounds(270, 130, 784, 500);
+        backgroundContent.setIcon(new ImageIcon(getImage("backgroundConquistas.png")));
+        mainPanel.add(backgroundContent);
+        backgroundContent.setBounds(270, 130, 784, 500);
 
-        madeText.setFont(new java.awt.Font("Krungthep", 0, 18)); // NOI18N
-        madeText.setForeground(new java.awt.Color(255, 255, 255));
-        madeText.setText("FEITO POR CESAR VERGARA");
-        jPanel1.add(madeText);
-        madeText.setBounds(20, 730, 260, 30);
-
-        btnSair.setIcon(new ImageIcon(ImageUtils.getImage("botaoSairBottom.png")));
-        btnSair.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnSairMouseClicked(evt);
+        btnExit.setIcon(new ImageIcon(getImage("botaoSairBottom.png")));
+        btnExit.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent evt) {
+                handleExitPress(evt);
             }
         });
-        jPanel1.add(btnSair);
-        btnSair.setBounds(1170, 710, 180, 45);
+        mainPanel.add(btnExit);
+        btnExit.setBounds(1170, 710, 180, 45);
 
-        background.setIcon(new ImageIcon(ImageUtils.getImage("fundo_sistema.jpg")));
-        jPanel1.add(background);
+        background.setIcon(new ImageIcon(getImage("fundo_sistema.jpg")));
+        mainPanel.add(background);
         background.setBounds(0, 0, 1366, 770);
 
-        org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
+        GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-                layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                        .add(jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 1366, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-                layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                        .add(jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
-        );
+        layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.LEADING).add(mainPanel, GroupLayout.DEFAULT_SIZE, 1366, Short.MAX_VALUE));
+        layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.LEADING).add(mainPanel, GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE));
 
         pack();
     }

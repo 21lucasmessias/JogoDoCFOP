@@ -4,13 +4,13 @@ package jogo;/*
  * and open the template in the editor.
  */
 
-import menu.MenuPrincipal;
+import home.Home;
 import pergunta.Pergunta;
 import pergunta.PerguntaNotaFiscal;
 import resposta.RespostaCerta;
 import resposta.RespostaErrada;
 import utils.Memento;
-import utils.telaCadastro;
+import login.Register;
 
 import javax.swing.*;
 import java.io.File;
@@ -110,7 +110,7 @@ public class JogoPerguntaNota extends JFrame {
                 out.println(conta[0] + "," + strPass + "," + conta[2] + "," + conta[3] + "," + completou + "," + conta[5] + "," + conquistas[0] + "," + conquistas[1] + "," + conquistas[2] + "," + conquistas[3] + "," + conquistas[4] + "," + conquistas[5]);
                 System.out.println("Conta atualizada com sucesso.");
             } catch (FileNotFoundException ex) {
-                Logger.getLogger(telaCadastro.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             System.out.println("Erro ao atualizar conta: conta não existe.");
@@ -234,7 +234,7 @@ public class JogoPerguntaNota extends JFrame {
     }
 
     public void menuPrincipal() {
-        MenuPrincipal novaTentativa = new MenuPrincipal(conta);
+        Home novaTentativa = new Home(conta);
         novaTentativa.setLocationRelativeTo(null);
         novaTentativa.setVisible(true);
         this.dispose();
@@ -612,13 +612,13 @@ public class JogoPerguntaNota extends JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(MenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            Logger.getLogger(MenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            Logger.getLogger(MenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
         } catch (UnsupportedLookAndFeelException ex) {
-            Logger.getLogger(MenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
