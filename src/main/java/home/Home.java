@@ -24,6 +24,10 @@ public class Home extends javax.swing.JFrame {
 
     String[] conta = null;
 
+
+
+
+
     /**
      * Creates new form NewJFrame
      */
