@@ -6,9 +6,9 @@ package home;/*
 
 //import java.awt.event.KeyEvent;
 
-import jogo.Jogo;
-import jogo.JogoInstrucao;
-import jogo.JogoInstrucaoNota;
+import game.Game;
+import game.JogoInstrucao;
+import game.JogoInstrucaoNota;
 import login.Login;
 
 import javax.swing.*;
@@ -148,7 +148,7 @@ public class Home extends javax.swing.JFrame {
     public void validarJogadorFase() {
         int escolheFase = 0;
         int i = 0;
-        Jogo jogo = Jogo.getInstance();
+        Game jogo = Game.getInstance();
 
         try {
             FileReader arqFase = new FileReader("rankingFase1.txt");
@@ -190,7 +190,7 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_btnJogarMouseClicked
 
     private void btnConquistasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConquistasMouseClicked
-        Conquistas verConquistas = new Conquistas(conta);
+        Achievements verConquistas = new Achievements(conta);
         verConquistas.setLocationRelativeTo(null);
         verConquistas.setVisible(true);
         this.dispose();

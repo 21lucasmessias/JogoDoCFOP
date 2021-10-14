@@ -1,12 +1,8 @@
-package jogo;/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+package game;
 
 import home.Home;
 import pergunta.Pergunta;
-import pergunta.PerguntaNotaFiscal;
+import pergunta.PerguntaCfop;
 import resposta.RespostaCerta;
 import resposta.RespostaErrada;
 import utils.Memento;
@@ -23,43 +19,41 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
  * @author cesar
  */
-public class JogoPerguntaNota extends JFrame {
+public class JogoPergunta extends JFrame {
 
     private String[] conta = null;
-    private Jogo jogoAtual;
+    private Game jogoAtual;
     private ArrayList<Pergunta> listaDePerguntas;
-    private PerguntaNotaFiscal perguntaAtual;
+    private PerguntaCfop perguntaAtual;
     private static final int TROFEU1 = 6;
     private static final int TROFEU2 = 7;
     private static final int TROFEU3 = 8;
     private static final int TROFEU4 = 9;
     private static final int TROFEU5 = 10;
     private static final int TROFEU6 = 11;
-    private ArrayList<Memento> mementos = new ArrayList<>();
+    private final ArrayList<Memento> mementos = new ArrayList<>();
     private Duration tempoResposta;
     private int qtdPerguntas;
-    private int fase = 2;
 
-    public JogoPerguntaNota() {
+    public JogoPergunta() {
         initComponents();
     }
 
-    public JogoPerguntaNota(String[] conta, ArrayList<Pergunta> perguntas) {
+    public JogoPergunta(String[] conta, ArrayList<Pergunta> perguntas) {
         initComponents();
         this.conta = conta;
         this.listaDePerguntas = perguntas;
-        this.jogoAtual = Jogo.getInstance();
-        this.jogoAtual.setFase(2);
+        this.jogoAtual = Game.getInstance();
+        this.jogoAtual.setLvl(1);
 
         JFrame frame = new JFrame();
         String qtd = JOptionPane.showInputDialog(frame, "Digite a quantidade de Perguntas!", 8);
-        this.jogoAtual.setQtdPerguntas(Integer.parseInt(qtd));
-        this.qtdPerguntas = jogoAtual.getQtdPerguntas();
+        this.jogoAtual.setQuestionsQuantity(Integer.parseInt(qtd));
+        this.qtdPerguntas = jogoAtual.getQuestionsQuantity();
         while (qtdPerguntas < 8 || qtdPerguntas > 20) {
-            JOptionPane.showMessageDialog(null, "Minimo: 08 perguntas e Máximo: 20!");
+            JOptionPane.showMessageDialog(frame, "Minimo: 08 perguntas e Máximo: 20!");
             qtd = JOptionPane.showInputDialog(frame, "Digite a quantidade de Perguntas!", 8);
             qtdPerguntas = Integer.parseInt(qtd);
         }
@@ -67,20 +61,20 @@ public class JogoPerguntaNota extends JFrame {
     }
 
     private void preencherDados() {
-        perguntaAtual = (PerguntaNotaFiscal) listaDePerguntas.get((Integer.parseInt(levelState.getText()) - 1));
-        
+        perguntaAtual = (PerguntaCfop) listaDePerguntas.get((Integer.parseInt(levelState.getText()) - 1));
+        String opera;
+        if (this.perguntaAtual.getOperacao() == 1) {
+            opera = "Entrada";
+        } else {
+            opera = "Saída";
+        }
+
         numPerguntas.setText(String.valueOf(this.qtdPerguntas));
+        operacaoInput.setText(opera);
+        cidadeInput.setText(this.perguntaAtual.getEmissora());
+        remetenteInput.setText(this.perguntaAtual.getRemetente());
+        destinatarioInput.setText(this.perguntaAtual.getDestinatario());
         tituloPergunta.setText(this.perguntaAtual.getTitulo());
-        uf.setText(String.valueOf(this.perguntaAtual.getUf()));
-        ano.setText(String.valueOf(this.perguntaAtual.getAno()));
-        mes.setText(String.valueOf(this.perguntaAtual.getMes()));
-        cnpj.setText(String.valueOf(this.perguntaAtual.getCnpj()));
-        modelo.setText(String.valueOf(this.perguntaAtual.getModelo()));
-        serie.setText(String.valueOf(this.perguntaAtual.getSerie()));
-        numero.setText(String.valueOf(this.perguntaAtual.getNumero()));
-        codNumerico.setText(String.valueOf(this.perguntaAtual.getCodigoNumerico()));
-        digito.setText(String.valueOf(this.perguntaAtual.getDigitoVerificador()));
-        
         int[] respostas = this.perguntaAtual.getRespostas();
         opcao1.setText(String.valueOf(respostas[0]));
         opcao2.setText(String.valueOf(respostas[1]));
@@ -91,7 +85,6 @@ public class JogoPerguntaNota extends JFrame {
     }
 
     private void atualizarInfo() {
-
         String completou = "não";
         if (jogoAtual.getSeq() > Integer.parseInt(conta[5])) {
             conta[5] = Integer.toString(jogoAtual.getSeq());
@@ -126,7 +119,7 @@ public class JogoPerguntaNota extends JFrame {
         }
         // trofeu ligeirinho
         if (conta[TROFEU2].equals("0")) {
-            if (tempoResposta.getSeconds() < 3) {
+            if (tempoResposta.getSeconds() < 5) {
                 conta[TROFEU2] = "1";
                 mudancas++;
             }
@@ -138,39 +131,37 @@ public class JogoPerguntaNota extends JFrame {
                 mudancas++;
             }
         }
-        // trofeu 08 acertos seguidos
+        // trofeu 8 acertos seguidos
         if (conta[TROFEU4].equals("0")) {
             if (jogoAtual.getSeq() >= 8) {
                 conta[TROFEU4] = "1";
                 mudancas++;
             }
         }
-        // trofeu finalizar a fase sem errar
+        // trofeu completar a fase sem errar
         if (conta[TROFEU5].equals("0")) {
-            if (jogoAtual.getAcertos() == qtdPerguntas) {
+            if (jogoAtual.getRightAnswers() == qtdPerguntas) {
                 conta[TROFEU5] = "1";
                 mudancas++;
             }
         }
-        // trofeu completou o game
-        if (conta[TROFEU6].equals("0")) {
-            if (jogoAtual.getPerguntas() == qtdPerguntas) {
+        // trofeu completou a primeira fase
+       /* if (conta[TROFEU6].equals("0")) {
+            if (jogoAtual.getPerguntas() == 20) {
                 conta[TROFEU6] = "1";
                 mudancas++;
             }
-        }
+        }*/
         if (mudancas > 0) {
             atualizarInfo();
         }
     }
-//desabilita campos respostas
 
     public void desabRespostas() {
         opcao1.setEnabled(false);
         opcao2.setEnabled(false);
         opcao3.setEnabled(false);
         opcao4.setEnabled(false);
-
     }
 
     private void responderPergunta(int opcao) {
@@ -178,11 +169,11 @@ public class JogoPerguntaNota extends JFrame {
             tempoResposta = Duration.between(getMemento().getActionTime(), mementos.get(0).getActionTime());
             System.out.println("resposta: " + opcao + " Resposta Certa: " + perguntaAtual.getRespostaCerta() + " Tempo levado: " + tempoResposta.toSeconds() + " segundos.");
             if (perguntaAtual.getRespostaCerta() == opcao) {
-                jogoAtual.setAcertos(jogoAtual.getAcertos() + 1);
-                jogoAtual.setPontuacao(jogoAtual.getPontuacao() + 80);
+                jogoAtual.setRightAnswers(jogoAtual.getRightAnswers() + 1);
+                jogoAtual.setScore(jogoAtual.getScore() + 80);
                 jogoAtual.setSeq(jogoAtual.getSeq() + 1);
                 RespostaCerta feedback;
-                if (jogoAtual.getPerguntas() < 19 && jogoAtual.getErros() < 3) {
+                if (jogoAtual.getQuestions() < 19 && jogoAtual.getWrongAnswers() < 3) {
                     feedback = new RespostaCerta(false, conta);
                 } else {
                     feedback = new RespostaCerta(true, conta);
@@ -191,11 +182,11 @@ public class JogoPerguntaNota extends JFrame {
                 feedback.setDefaultCloseOperation(RespostaCerta.DO_NOTHING_ON_CLOSE);
                 feedback.setVisible(true);
             } else {
-                jogoAtual.setErros(jogoAtual.getErros() + 1);
+                jogoAtual.setWrongAnswers(jogoAtual.getWrongAnswers() + 1);
                 jogoAtual.setSeq(0);
                 int vidas = atualizarVidas();
                 RespostaErrada feedback;
-                if (jogoAtual.getPerguntas() < 19 && jogoAtual.getErros() < 3) {
+                if (jogoAtual.getQuestions() < 19 && jogoAtual.getWrongAnswers() < 3) {
                     feedback = new RespostaErrada(false, conta, vidas);
                 } else {
                     feedback = new RespostaErrada(true, conta, vidas);
@@ -204,15 +195,16 @@ public class JogoPerguntaNota extends JFrame {
                 feedback.setDefaultCloseOperation(RespostaErrada.DO_NOTHING_ON_CLOSE);
                 feedback.setVisible(true);
             }
-            if (jogoAtual.getPerguntas() >= 21 || jogoAtual.getErros() == 3) {
+            if (jogoAtual.getQuestions() >= 21 || jogoAtual.getWrongAnswers() == 3) {
                 menuPrincipal();
             }
-            // atualiza o level 
-            jogoAtual.setPerguntas(jogoAtual.getPerguntas() + 1);
-            if (jogoAtual.getPerguntas() <= 21) {
-                levelState.setText(Integer.toString(jogoAtual.getPerguntas()));
-                if (jogoAtual.getPerguntas() == qtdPerguntas + 1) {
-                    btnResultado.setEnabled(true);
+
+            // atualiza o level
+            jogoAtual.setQuestions(jogoAtual.getQuestions() + 1);
+            if (jogoAtual.getQuestions() <= 21) {
+                levelState.setText(Integer.toString(jogoAtual.getQuestions()));
+                if (jogoAtual.getQuestions() == qtdPerguntas + 1) {
+                    btnProxFase.setEnabled(true);
                     desabRespostas();
                 }
 
@@ -230,7 +222,7 @@ public class JogoPerguntaNota extends JFrame {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println("Situacao: " + jogoAtual.getStatus() + " Pontuacao: " + jogoAtual.getPontuacao() + " Perguntas: " + jogoAtual.getPerguntas() + " Acertos: " + jogoAtual.getAcertos() + " Erros: " + jogoAtual.getErros() + " Seq: " + jogoAtual.getSeq());
+        System.out.println("Situacao: " + jogoAtual.getStatus() + " Pontuacao: " + jogoAtual.getScore() + " Perguntas: " + jogoAtual.getQuestions() + " Acertos: " + jogoAtual.getRightAnswers() + " Erros: " + jogoAtual.getWrongAnswers() + " Seq: " + jogoAtual.getSeq());
     }
 
     public void menuPrincipal() {
@@ -241,7 +233,7 @@ public class JogoPerguntaNota extends JFrame {
     }
 
     public int atualizarVidas() {
-        int vidas = 3 - jogoAtual.getErros();
+        int vidas = 3 - jogoAtual.getWrongAnswers();
         ImageIcon vida = new ImageIcon(getClass().getResource("/resources/" + vidas + "vidas.png"));
         lifes.setIcon(vida);
         return vidas;
@@ -268,22 +260,18 @@ public class JogoPerguntaNota extends JFrame {
         JLabel titleLeft = new JLabel();
         lifes = new JLabel();
         numPerguntas = new JLabel();
+        JLabel jLabel1 = new JLabel();
         JLabel truckIcon = new JLabel();
-        JLabel txtChave = new JLabel();
-        JLabel jLabel4 = new JLabel();
         JLabel tituloDados = new JLabel();
         JLabel fundoTituloDados = new JLabel();
-        JLabel jLabel2 = new JLabel();
-        uf = new JLabel();
-        ano = new JLabel();
-        mes = new JLabel();
-        cnpj = new JLabel();
-        modelo = new JLabel();
-        serie = new JLabel();
-        numero = new JLabel();
-        codNumerico = new JLabel();
-        digito = new JLabel();
-        JLabel jLabel3 = new JLabel();
+        JLabel operacaoTitulo = new JLabel();
+        operacaoInput = new JLabel();
+        JLabel cidadeTitulo = new JLabel();
+        cidadeInput = new JLabel();
+        JLabel remetenteTitulo = new JLabel();
+        remetenteInput = new JLabel();
+        JLabel destinatarioTitulo = new JLabel();
+        destinatarioInput = new JLabel();
         JLabel fundoDados = new JLabel();
         levelInput = new JLabel();
         levelState = new JLabel();
@@ -293,13 +281,13 @@ public class JogoPerguntaNota extends JFrame {
         JLabel fundoPergunta = new JLabel();
         opcao1 = new JButton();
         opcao2 = new JButton();
-        JLabel jLabel6 = new JLabel();
         opcao3 = new JButton();
         opcao4 = new JButton();
         JLabel madeText = new JLabel();
         JLabel btnSair = new JLabel();
-        btnResultado = new JLabel();
+        btnProxFase = new JLabel();
         JLabel background = new JLabel();
+        JLabel jLabel2 = new JLabel();
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -319,108 +307,91 @@ public class JogoPerguntaNota extends JFrame {
         numPerguntas.setForeground(new java.awt.Color(255, 255, 255));
         numPerguntas.setText("20");
         jPanel1.add(numPerguntas);
-        numPerguntas.setBounds(1240, 10, 30, 50);
+        numPerguntas.setBounds(1250, 10, 40, 50);
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("/");
+        jPanel1.add(jLabel1);
+        jLabel1.setBounds(1230, 10, 14, 50);
 
         truckIcon.setIcon(new ImageIcon(getClass().getResource("/resources/truck.png"))); // NOI18N
         jPanel1.add(truckIcon);
-        truckIcon.setBounds(290, 180, 80, 60);
-
-        txtChave.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtChave.setText("CHAVE");
-        jPanel1.add(txtChave);
-        txtChave.setBounds(290, 430, 60, 40);
-
-        jLabel4.setIcon(new ImageIcon(getClass().getResource("/resources/codBarras.png"))); // NOI18N
-        jLabel4.setText("jLabel4");
-        jPanel1.add(jLabel4);
-        jLabel4.setBounds(110, 370, 440, 50);
+        truckIcon.setBounds(330, 160, 80, 60);
 
         tituloDados.setFont(new java.awt.Font("Krungthep", 0, 14)); // NOI18N
         tituloDados.setForeground(new java.awt.Color(255, 255, 255));
-        tituloDados.setText("CHAVE DE ACESSO DA NOTA");
+        tituloDados.setText("DADOS DA NOTA");
         jPanel1.add(tituloDados);
-        tituloDados.setBounds(230, 260, 300, 20);
+        tituloDados.setBounds(320, 230, 118, 20);
 
         fundoTituloDados.setIcon(new ImageIcon(getClass().getResource("/resources/fundoTituloDados.png"))); // NOI18N
         jPanel1.add(fundoTituloDados);
-        fundoTituloDados.setBounds(180, 260, 160, 23);
+        fundoTituloDados.setBounds(290, 230, 158, 23);
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("/");
-        jPanel1.add(jLabel2);
-        jLabel2.setBounds(1230, 14, 10, 40);
+        operacaoTitulo.setFont(new java.awt.Font("Krungthep", 0, 18)); // NOI18N
+        operacaoTitulo.setForeground(new java.awt.Color(9, 0, 108));
+        operacaoTitulo.setText("OPERAÇÃO");
+        jPanel1.add(operacaoTitulo);
+        operacaoTitulo.setBounds(140, 290, 190, 24);
 
-        uf.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        uf.setText("21");
-        uf.setBorder(BorderFactory.createLineBorder(new java.awt.Color(0, 0, 255)));
-        uf.setEnabled(false);
-        jPanel1.add(uf);
-        uf.setBounds(70, 490, 23, 30);
+        operacaoInput.setFont(new java.awt.Font("Krungthep", 0, 18)); // NOI18N
+        operacaoInput.setForeground(new java.awt.Color(142, 142, 142));
+        operacaoInput.setHorizontalAlignment(SwingConstants.RIGHT);
+        operacaoInput.setText("OPERAÇÃO");
+        operacaoInput.addContainerListener(new java.awt.event.ContainerAdapter() {
+            public void componentAdded(java.awt.event.ContainerEvent evt) {
+                operacaoInputComponentAdded(evt);
+            }
+        });
+        jPanel1.add(operacaoInput);
+        operacaoInput.setBounds(342, 290, 240, 24);
 
-        ano.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        ano.setText("16");
-        ano.setBorder(BorderFactory.createLineBorder(new java.awt.Color(0, 0, 255)));
-        ano.setEnabled(false);
-        jPanel1.add(ano);
-        ano.setBounds(100, 490, 23, 30);
+        cidadeTitulo.setFont(new java.awt.Font("Krungthep", 0, 18)); // NOI18N
+        cidadeTitulo.setForeground(new java.awt.Color(9, 0, 108));
+        cidadeTitulo.setText("CIDADE EMISSORA");
+        jPanel1.add(cidadeTitulo);
+        cidadeTitulo.setBounds(140, 360, 190, 20);
 
-        mes.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        mes.setText("03");
-        mes.setBorder(BorderFactory.createLineBorder(new java.awt.Color(0, 0, 255)));
-        mes.setEnabled(false);
-        jPanel1.add(mes);
-        mes.setBounds(120, 490, 23, 30);
+        cidadeInput.setFont(new java.awt.Font("Krungthep", 0, 18)); // NOI18N
+        cidadeInput.setForeground(new java.awt.Color(142, 142, 142));
+        cidadeInput.setHorizontalAlignment(SwingConstants.RIGHT);
+        cidadeInput.setText("CIDADE/UF");
+        cidadeInput.setToolTipText("");
+        jPanel1.add(cidadeInput);
+        cidadeInput.setBounds(342, 360, 240, 24);
 
-        cnpj.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        cnpj.setText("07100000039412");
-        cnpj.setBorder(BorderFactory.createLineBorder(new java.awt.Color(51, 51, 255)));
-        cnpj.setEnabled(false);
-        jPanel1.add(cnpj);
-        cnpj.setBounds(150, 490, 150, 30);
+        remetenteTitulo.setFont(new java.awt.Font("Krungthep", 0, 18)); // NOI18N
+        remetenteTitulo.setForeground(new java.awt.Color(9, 0, 108));
+        remetenteTitulo.setText("REMETENTE");
+        jPanel1.add(remetenteTitulo);
+        remetenteTitulo.setBounds(140, 470, 180, 20);
 
-        modelo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        modelo.setText("03");
-        modelo.setBorder(BorderFactory.createLineBorder(new java.awt.Color(0, 0, 255)));
-        modelo.setEnabled(false);
-        jPanel1.add(modelo);
-        modelo.setBounds(300, 490, 23, 30);
+        remetenteInput.setFont(new java.awt.Font("Krungthep", 0, 18)); // NOI18N
+        remetenteInput.setForeground(new java.awt.Color(142, 142, 142));
+        remetenteInput.setHorizontalAlignment(SwingConstants.RIGHT);
+        remetenteInput.setText("CIDADE/UF");
+        remetenteInput.setToolTipText("");
+        jPanel1.add(remetenteInput);
+        remetenteInput.setBounds(342, 470, 240, 24);
 
-        serie.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        serie.setText("532");
-        serie.setBorder(BorderFactory.createLineBorder(new java.awt.Color(0, 0, 255)));
-        serie.setEnabled(false);
-        jPanel1.add(serie);
-        serie.setBounds(330, 490, 35, 30);
+        destinatarioTitulo.setFont(new java.awt.Font("Krungthep", 0, 18)); // NOI18N
+        destinatarioTitulo.setForeground(new java.awt.Color(9, 0, 108));
+        destinatarioTitulo.setText("DESTINATÁRIO");
+        jPanel1.add(destinatarioTitulo);
+        destinatarioTitulo.setBounds(140, 540, 180, 20);
 
-        numero.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        numero.setText("036000039");
-        numero.setBorder(BorderFactory.createLineBorder(new java.awt.Color(0, 0, 255)));
-        numero.setEnabled(false);
-        jPanel1.add(numero);
-        numero.setBounds(370, 490, 97, 30);
-
-        codNumerico.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        codNumerico.setText("126353203");
-        codNumerico.setBorder(BorderFactory.createLineBorder(new java.awt.Color(0, 0, 255)));
-        codNumerico.setEnabled(false);
-        jPanel1.add(codNumerico);
-        codNumerico.setBounds(470, 490, 97, 30);
-
-        digito.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        digito.setText("6");
-        digito.setBorder(BorderFactory.createLineBorder(new java.awt.Color(0, 0, 255)));
-        digito.setEnabled(false);
-        jPanel1.add(digito);
-        digito.setBounds(570, 490, 15, 30);
-
-        jLabel3.setIcon(new ImageIcon(getClass().getResource("/resources/fundoTituloDados.png"))); // NOI18N
-        jPanel1.add(jLabel3);
-        jLabel3.setBounds(320, 260, 196, 23);
+        destinatarioInput.setFont(new java.awt.Font("Krungthep", 0, 18)); // NOI18N
+        destinatarioInput.setForeground(new java.awt.Color(142, 142, 142));
+        destinatarioInput.setHorizontalAlignment(SwingConstants.RIGHT);
+        destinatarioInput.setText("CIDADE/UF");
+        destinatarioInput.setToolTipText("");
+        jPanel1.add(destinatarioInput);
+        destinatarioInput.setBounds(342, 540, 240, 24);
 
         fundoDados.setIcon(new ImageIcon(getClass().getResource("/resources/fundoDados.png"))); // NOI18N
         jPanel1.add(fundoDados);
-        fundoDados.setBounds(70, 150, 520, 500);
+        fundoDados.setBounds(100, 140, 520, 500);
 
         levelInput.setBackground(new java.awt.Color(255, 255, 255));
         levelInput.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
@@ -434,6 +405,7 @@ public class JogoPerguntaNota extends JFrame {
         levelState.setForeground(new java.awt.Color(255, 255, 255));
         levelState.setHorizontalAlignment(SwingConstants.CENTER);
         levelState.setText("1");
+        levelState.setToolTipText("");
         jPanel1.add(levelState);
         levelState.setBounds(1190, 10, 70, 50);
 
@@ -450,11 +422,11 @@ public class JogoPerguntaNota extends JFrame {
         tituloPergunta.setHorizontalAlignment(SwingConstants.CENTER);
         tituloPergunta.setText("TITULO PERGUNTA");
         jPanel1.add(tituloPergunta);
-        tituloPergunta.setBounds(610, 160, 740, 32);
+        tituloPergunta.setBounds(730, 160, 550, 32);
 
         fundoPergunta.setIcon(new ImageIcon(getClass().getResource("/resources/tituloPergunta.png"))); // NOI18N
         jPanel1.add(fundoPergunta);
-        fundoPergunta.setBounds(600, 150, 250, 50);
+        fundoPergunta.setBounds(730, 150, 550, 50);
 
         opcao1.setBackground(new java.awt.Color(255, 255, 255));
         opcao1.setFont(new java.awt.Font("Roboto", 0, 36)); // NOI18N
@@ -465,7 +437,7 @@ public class JogoPerguntaNota extends JFrame {
             }
         });
         jPanel1.add(opcao1);
-        opcao1.setBounds(720, 240, 540, 60);
+        opcao1.setBounds(740, 240, 540, 60);
 
         opcao2.setBackground(new java.awt.Color(255, 255, 255));
         opcao2.setFont(new java.awt.Font("Roboto", 0, 36)); // NOI18N
@@ -476,11 +448,7 @@ public class JogoPerguntaNota extends JFrame {
             }
         });
         jPanel1.add(opcao2);
-        opcao2.setBounds(720, 320, 540, 60);
-
-        jLabel6.setIcon(new ImageIcon(getClass().getResource("/resources/tituloPergunta.png"))); // NOI18N
-        jPanel1.add(jLabel6);
-        jLabel6.setBounds(810, 150, 560, 50);
+        opcao2.setBounds(740, 320, 540, 60);
 
         opcao3.setBackground(new java.awt.Color(255, 255, 255));
         opcao3.setFont(new java.awt.Font("Roboto", 0, 36)); // NOI18N
@@ -491,7 +459,7 @@ public class JogoPerguntaNota extends JFrame {
             }
         });
         jPanel1.add(opcao3);
-        opcao3.setBounds(720, 400, 540, 60);
+        opcao3.setBounds(740, 400, 540, 60);
 
         opcao4.setBackground(new java.awt.Color(255, 255, 255));
         opcao4.setFont(new java.awt.Font("Roboto", 0, 36)); // NOI18N
@@ -502,7 +470,7 @@ public class JogoPerguntaNota extends JFrame {
             }
         });
         jPanel1.add(opcao4);
-        opcao4.setBounds(720, 480, 540, 60);
+        opcao4.setBounds(740, 480, 540, 60);
 
         madeText.setFont(new java.awt.Font("Krungthep", 0, 18)); // NOI18N
         madeText.setForeground(new java.awt.Color(255, 255, 255));
@@ -519,40 +487,45 @@ public class JogoPerguntaNota extends JFrame {
         jPanel1.add(btnSair);
         btnSair.setBounds(1170, 710, 180, 45);
 
-        btnResultado.setIcon(new ImageIcon(getClass().getResource("/resources/botaoResultadoe.png"))); // NOI18N
-        btnResultado.setText("btnProxiFase");
-        btnResultado.setEnabled(false);
-        btnResultado.setName(""); // NOI18N
-        btnResultado.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnProxFase.setIcon(new ImageIcon(getClass().getResource("/resources/botaoResultadoe.png"))); // NOI18N
+        btnProxFase.setText("btnProxiFase");
+        btnProxFase.setEnabled(false);
+        btnProxFase.setName(""); // NOI18N
+        btnProxFase.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnResultadoMouseClicked(evt);
+                btnProxFaseMouseClicked(evt);
             }
         });
-        jPanel1.add(btnResultado);
-        btnResultado.setBounds(850, 550, 280, 80);
-        btnResultado.getAccessibleContext().setAccessibleDescription("");
+        jPanel1.add(btnProxFase);
+        btnProxFase.setBounds(870, 550, 280, 80);
+        btnProxFase.getAccessibleContext().setAccessibleName("");
+        btnProxFase.getAccessibleContext().setAccessibleDescription("");
 
         background.setIcon(new ImageIcon(getClass().getResource("/resources/fundo_sistema.jpg"))); // NOI18N
         background.setText("sdaa");
         jPanel1.add(background);
         background.setBounds(0, 0, 1392, 770);
+        background.getAccessibleContext().setAccessibleName("");
+
+        jLabel2.setText("jLabel2");
+        jPanel1.add(jLabel2);
+        jLabel2.setBounds(1180, 100, 34, 14);
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 1366, Short.MAX_VALUE)
+                layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                        .add(jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 1366, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
+                layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                        .add(jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSairMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSairMouseClicked
-
         int result = JOptionPane.showConfirmDialog(null, "Você tem certeza que deseja sair?", "Encerrar Tentativa", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (result == JOptionPane.YES_OPTION) {
             menuPrincipal();
@@ -583,26 +556,28 @@ public class JogoPerguntaNota extends JFrame {
         responderPergunta(4);
     }//GEN-LAST:event_opcao4ActionPerformed
 
-    private void btnResultadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnResultadoMouseClicked
-        // TODO add your handling code here:        
-        if (jogoAtual.getPerguntas() == qtdPerguntas + 1) {
-            levelState.setText(Integer.toString(jogoAtual.getPerguntas()));
+    private void operacaoInputComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_operacaoInputComponentAdded
+    }//GEN-LAST:event_operacaoInputComponentAdded
+
+    private void btnProxFaseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProxFaseMouseClicked
+        // TODO add your handling code here:
+        if (jogoAtual.getQuestions() == qtdPerguntas + 1) {
+            levelState.setText(Integer.toString(jogoAtual.getQuestions()));
             JogoResultado resultado = new JogoResultado(conta);
             resultado.setLocationRelativeTo(null);
             resultado.setVisible(true);
             this.dispose();
         }
-
-    }//GEN-LAST:event_btnResultadoMouseClicked
+    }//GEN-LAST:event_btnProxFaseMouseClicked
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
@@ -633,25 +608,20 @@ public class JogoPerguntaNota extends JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    JLabel ano;
-    JLabel btnResultado;
-    JLabel cnpj;
-    JLabel codNumerico;
-    JLabel digito;
+    JLabel btnProxFase;
+    JLabel cidadeInput;
+    JLabel destinatarioInput;
     JLabel levelInput;
     JLabel levelState;
     JLabel lifes;
-    JLabel mes;
-    JLabel modelo;
     JLabel numPerguntas;
-    JLabel numero;
     JButton opcao1;
     JButton opcao2;
     JButton opcao3;
     JButton opcao4;
-    JLabel serie;
+    JLabel operacaoInput;
+    JLabel remetenteInput;
     JLabel tituloPergunta;
-    JLabel uf;
     // End of variables declaration//GEN-END:variables
 
 }

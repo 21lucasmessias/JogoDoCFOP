@@ -1,4 +1,4 @@
-package jogo;
+package game;
 
 import home.Home;
 import pergunta.Pergunta;
@@ -14,7 +14,7 @@ public class JogoInstrucao extends JFrame {
 
     ArrayList<Pergunta> listaDePerguntas = new ArrayList<>();
     protected String[] conta = null;
-    private Jogo jogoAtual;
+    private Game jogoAtual;
     private JPanel mainPanel;
     private JLabel labelTest;
 
@@ -24,7 +24,7 @@ public class JogoInstrucao extends JFrame {
 
     public JogoInstrucao(String[] conta) {
         this.conta = conta;
-        this.jogoAtual = Jogo.getInstance();
+        this.jogoAtual = Game.getInstance();
 
         inicializarComponentes();
         limparJogo();
@@ -41,10 +41,10 @@ public class JogoInstrucao extends JFrame {
     }
 
     private void limparJogo() {
-        jogoAtual.setAcertos(0);
-        jogoAtual.setErros(0);
-        jogoAtual.setPerguntas(1);
-        jogoAtual.setPontuacao(0);
+        jogoAtual.setRightAnswers(0);
+        jogoAtual.setWrongAnswers(0);
+        jogoAtual.setQuestions(1);
+        jogoAtual.setScore(0);
         jogoAtual.setSeq(0);
         jogoAtual.setStatus(1);
     }

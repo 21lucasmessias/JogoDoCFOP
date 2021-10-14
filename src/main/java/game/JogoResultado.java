@@ -1,10 +1,10 @@
-package jogo;/*
+package game;/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 
-import home.Conquistas;
+import home.Achievements;
 import home.Home;
 
 import javax.swing.*;
@@ -18,7 +18,7 @@ import java.util.stream.Stream;
  */
 public class JogoResultado extends javax.swing.JFrame {
 
-    private Jogo jogo;
+    private Game jogo;
     String[] conta;
     private static final int TROFEU1 = 6;
     private static final int TROFEU2 = 7;
@@ -41,12 +41,12 @@ public class JogoResultado extends javax.swing.JFrame {
     public JogoResultado(String[] conta) {
         initComponents();
         this.conta = conta;
-        this.jogo = Jogo.getInstance();
+        this.jogo = Game.getInstance();
         preencherConquistas();
         //arquivoEscrita();
         //arquivoLeitura();
         ranking();
-        if (jogo.getFase() == 2) {
+        if (jogo.getLvl() == 2) {
             preencherIcone();
         }
     }
@@ -57,7 +57,7 @@ public class JogoResultado extends javax.swing.JFrame {
         File rank2 = new File("rankingFase2.txt");
         if (rank1.exists() && rank2.exists()) {
             try {
-                if (jogo.getFase() == 1) {
+                if (jogo.getLvl() == 1) {
                     this.arqNome = "rankingFase1.txt";
                 } else {
                     this.arqNome = "rankingFase2.txt";
@@ -91,10 +91,10 @@ public class JogoResultado extends javax.swing.JFrame {
                 FileWriter escreverArquivo = new FileWriter(arqNome, true);
                 BufferedWriter escreverLinha = new BufferedWriter(escreverArquivo);
 
-                if (jogo.getFase() == 1) {
-                    escreverLinha.write(1 + "," + email + "," + nome + "," + jogo.getPontuacao());
+                if (jogo.getLvl() == 1) {
+                    escreverLinha.write(1 + "," + email + "," + nome + "," + jogo.getScore());
                 } else {
-                    escreverLinha.write(2 + "," + email + "," + nome + "," + jogo.getPontuacao());
+                    escreverLinha.write(2 + "," + email + "," + nome + "," + jogo.getScore());
                 }
                 escreverLinha.newLine();
                 escreverLinha.close();
@@ -592,13 +592,13 @@ public class JogoResultado extends javax.swing.JFrame {
 
     private void btnProxFaseConquistasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProxFaseConquistasMouseClicked
         // TODO add your handling code here:
-        if (jogo.getFase() == 1) {
+        if (jogo.getLvl() == 1) {
             JogoInstrucaoNota jogo = new JogoInstrucaoNota(conta);
             jogo.setLocationRelativeTo(null);
             jogo.setVisible(true);
             this.dispose();
         } else {
-            Conquistas conquistas = new Conquistas(conta);
+            Achievements conquistas = new Achievements(conta);
             conquistas.setLocationRelativeTo(null);
             conquistas.setVisible(true);
         }
@@ -611,10 +611,10 @@ public class JogoResultado extends javax.swing.JFrame {
 //preenche os campos de acertos, erros, pontuacao
 
     private void preencherConquistas() {
-        totalPeguntas.setText(String.valueOf(jogo.getPerguntas() - 1));
-        pontosErros.setText(String.valueOf(jogo.getErros()));
-        pontosAcertos.setText(String.valueOf(jogo.getAcertos()));
-        totalPontos.setText(String.valueOf(jogo.getPontuacao()));
+        totalPeguntas.setText(String.valueOf(jogo.getQuestions() - 1));
+        pontosErros.setText(String.valueOf(jogo.getWrongAnswers()));
+        pontosAcertos.setText(String.valueOf(jogo.getRightAnswers()));
+        totalPontos.setText(String.valueOf(jogo.getScore()));
         ImageIcon estrela = new ImageIcon(getClass().getResource("/resources/starIcon.png"));
         if (conta[TROFEU1].equals("1")) {
             star1.setIcon(estrela);

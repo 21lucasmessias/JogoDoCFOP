@@ -1,6 +1,6 @@
 package login;
 
-import jogo.Jogo;
+import game.Game;
 import home.Home;
 import org.jdesktop.layout.GroupLayout;
 
@@ -97,7 +97,7 @@ public class Login extends JFrame {
                         account = str.split(",");
                     }
                     if (account[1].equals(strPass)) {
-                        Jogo game = Jogo.getInstance();
+                        Game game = Game.getInstance();
                         game.setLogin(inputEmail.getText());
                         Home jogo = new Home(account);
                         jogo.setLocationRelativeTo(null);
