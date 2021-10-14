@@ -4,7 +4,7 @@ package resposta;/*
  * and open the template in the editor.
  */
 
-import jogo.JogoPergunta;
+import game.JogoPergunta;
 import utils.reprodutorMidia;
 
 import java.awt.event.KeyEvent;

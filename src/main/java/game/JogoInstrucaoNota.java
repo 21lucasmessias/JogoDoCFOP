@@ -1,4 +1,4 @@
-package jogo;
+package game;
 
 import home.Home;
 import pergunta.Pergunta;
