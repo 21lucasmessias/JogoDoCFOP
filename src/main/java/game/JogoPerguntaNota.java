@@ -5,10 +5,10 @@ package game;/*
  */
 
 import home.Home;
-import pergunta.Pergunta;
-import pergunta.PerguntaNotaFiscal;
-import resposta.RespostaCerta;
-import resposta.RespostaErrada;
+import questions.Question;
+import questions.PerguntaNotaFiscal;
+import questions.RespostaCerta;
+import questions.RespostaErrada;
 import utils.Memento;
 import login.Register;
 
@@ -30,7 +30,7 @@ public class JogoPerguntaNota extends JFrame {
 
     private String[] conta = null;
     private Game jogoAtual;
-    private ArrayList<Pergunta> listaDePerguntas;
+    private ArrayList<Question> listaDePerguntas;
     private PerguntaNotaFiscal perguntaAtual;
     private static final int TROFEU1 = 6;
     private static final int TROFEU2 = 7;
@@ -47,7 +47,7 @@ public class JogoPerguntaNota extends JFrame {
         initComponents();
     }
 
-    public JogoPerguntaNota(String[] conta, ArrayList<Pergunta> perguntas) {
+    public JogoPerguntaNota(String[] conta, ArrayList<Question> perguntas) {
         initComponents();
         this.conta = conta;
         this.listaDePerguntas = perguntas;
@@ -176,7 +176,7 @@ public class JogoPerguntaNota extends JFrame {
     private void responderPergunta(int opcao) {
         if (opcao >= 1 && opcao <= 4) {
             tempoResposta = Duration.between(getMemento().getActionTime(), mementos.get(0).getActionTime());
-            System.out.println("resposta: " + opcao + " Resposta Certa: " + perguntaAtual.getRespostaCerta() + " Tempo levado: " + tempoResposta.toSeconds() + " segundos.");
+            System.out.println("pergunta.resposta: " + opcao + " Resposta Certa: " + perguntaAtual.getRespostaCerta() + " Tempo levado: " + tempoResposta.toSeconds() + " segundos.");
             if (perguntaAtual.getRespostaCerta() == opcao) {
                 jogoAtual.setRightAnswers(jogoAtual.getRightAnswers() + 1);
                 jogoAtual.setScore(jogoAtual.getScore() + 80);

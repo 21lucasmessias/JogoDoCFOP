@@ -4,20 +4,18 @@ package utils;/*
  * and open the template in the editor.
  */
 
-import pergunta.Pergunta;
+import questions.Question;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-/**
- *
- * @author cesar
- */
-public class perguntasAleatorio implements ordemPerguntasStrategy {
+
+
+public class questionsRandom implements questionsSortStrategy {
 
     @Override
-    public void ordenarPerguntas(ArrayList<Pergunta> perguntas) {
-        Collections.shuffle(perguntas);
+    public void sortQuestions(ArrayList<Question> questions) {
+        Collections.shuffle(questions);
     }
 
 }

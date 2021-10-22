@@ -1,4 +1,4 @@
-package pergunta;/*
+package questions;/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -8,14 +8,14 @@ package pergunta;/*
  *
  * @author Eder e Raimundo Osvaldo
  */
-public class PerguntaCfop extends Pergunta {
+public class QuestionCfop extends Question {
 
     private int operacao;
     private String emissora;
     private String remetente;
     private String destinatario;
 
-    public PerguntaCfop(int num, int op, String emissora, String remet, String desti, String titulo, int opcoes[], int respostaCerta) {
+    public QuestionCfop(int num, int op, String emissora, String remet, String desti, String titulo, int opcoes[], int respostaCerta) {
         super(num, titulo, opcoes, respostaCerta);
         this.operacao = op;
         this.emissora = emissora;

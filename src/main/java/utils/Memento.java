@@ -6,10 +6,7 @@ package utils;/*
 
 import java.time.Instant;
 
-/**
- *
- * @author cesar
- */
+
 public class Memento {
 
     private Instant actionTime;

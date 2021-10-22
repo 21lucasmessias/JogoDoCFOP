@@ -4,15 +4,12 @@ package utils;/*
  * and open the template in the editor.
  */
 
-import pergunta.Pergunta;
+import questions.Question;
 
 import java.util.ArrayList;
 
-/**
- *
- * @author cesar
- */
-public interface ordemPerguntasStrategy {
 
-    public void ordenarPerguntas(ArrayList<Pergunta> perguntas);
+public interface questionsSortStrategy {
+
+    public void sortQuestions(ArrayList<Question> questions);
 }
