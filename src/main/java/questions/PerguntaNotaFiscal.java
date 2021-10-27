@@ -1,4 +1,4 @@
-package pergunta;/*
+package questions;/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -8,7 +8,7 @@ package pergunta;/*
  *
  * @author Eder e Raimundo Osvaldo
  */
-public class PerguntaNotaFiscal extends Pergunta {
+public class PerguntaNotaFiscal extends Question {
 
     private String uf;
     private String ano;

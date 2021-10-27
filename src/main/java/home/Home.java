@@ -7,7 +7,7 @@ package home;/*
 //import java.awt.event.KeyEvent;
 
 import game.Game;
-import game.JogoInstrucao;
+import game.GameInstruction;
 import game.JogoInstrucaoNota;
 import login.Login;
 
@@ -130,7 +130,7 @@ public class Home extends javax.swing.JFrame {
 
     //metodo chamar classe JogoIntrucao
     public void chamarInstrucao() {
-        JogoInstrucao jogoIns = new JogoInstrucao(conta);
+        GameInstruction jogoIns = new GameInstruction(conta);
         jogoIns.setLocationRelativeTo(null);
         jogoIns.setVisible(true);
         this.dispose();

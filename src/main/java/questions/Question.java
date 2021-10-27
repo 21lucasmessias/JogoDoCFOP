@@ -1,4 +1,4 @@
-package pergunta;/*
+package questions;/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -9,14 +9,14 @@ package pergunta;/*
  *
  * @author cesar, eder e raimundo
  */
-public abstract class Pergunta {
+public abstract class Question {
 
     private int num;
     private String titulo;
     private int[] opcoes;
     private int respostaCerta;
 
-    public Pergunta(int num, String titulo, int respostas[], int respostaCerta) {
+    public Question(int num, String titulo, int respostas[], int respostaCerta) {
         this.num = num;
         this.titulo = titulo;
         this.opcoes = respostas;

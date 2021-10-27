@@ -1,10 +1,10 @@
 package game;
 
 import home.Home;
-import pergunta.Pergunta;
-import pergunta.PerguntaCfop;
-import resposta.RespostaCerta;
-import resposta.RespostaErrada;
+import questions.Question;
+import questions.QuestionCfop;
+import questions.RespostaCerta;
+import questions.RespostaErrada;
 import utils.Memento;
 import login.Register;
 
@@ -25,8 +25,8 @@ public class JogoPergunta extends JFrame {
 
     private String[] conta = null;
     private Game jogoAtual;
-    private ArrayList<Pergunta> listaDePerguntas;
-    private PerguntaCfop perguntaAtual;
+    private ArrayList<Question> listaDePerguntas;
+    private QuestionCfop perguntaAtual;
     private static final int TROFEU1 = 6;
     private static final int TROFEU2 = 7;
     private static final int TROFEU3 = 8;
@@ -41,7 +41,7 @@ public class JogoPergunta extends JFrame {
         initComponents();
     }
 
-    public JogoPergunta(String[] conta, ArrayList<Pergunta> perguntas) {
+    public JogoPergunta(String[] conta, ArrayList<Question> perguntas) {
         initComponents();
         this.conta = conta;
         this.listaDePerguntas = perguntas;
@@ -61,7 +61,7 @@ public class JogoPergunta extends JFrame {
     }
 
     private void preencherDados() {
-        perguntaAtual = (PerguntaCfop) listaDePerguntas.get((Integer.parseInt(levelState.getText()) - 1));
+        perguntaAtual = (QuestionCfop) listaDePerguntas.get((Integer.parseInt(levelState.getText()) - 1));
         String opera;
         if (this.perguntaAtual.getOperacao() == 1) {
             opera = "Entrada";
@@ -167,7 +167,7 @@ public class JogoPergunta extends JFrame {
     private void responderPergunta(int opcao) {
         if (opcao >= 1 && opcao <= 4) {
             tempoResposta = Duration.between(getMemento().getActionTime(), mementos.get(0).getActionTime());
-            System.out.println("resposta: " + opcao + " Resposta Certa: " + perguntaAtual.getRespostaCerta() + " Tempo levado: " + tempoResposta.toSeconds() + " segundos.");
+            System.out.println("pergunta.resposta: " + opcao + " Resposta Certa: " + perguntaAtual.getRespostaCerta() + " Tempo levado: " + tempoResposta.toSeconds() + " segundos.");
             if (perguntaAtual.getRespostaCerta() == opcao) {
                 jogoAtual.setRightAnswers(jogoAtual.getRightAnswers() + 1);
                 jogoAtual.setScore(jogoAtual.getScore() + 80);

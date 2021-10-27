@@ -1,10 +1,11 @@
-package resposta;/*
+package questions;/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 
-import utils.reprodutorMidia;
+import game.JogoPergunta;
+import utils.MediaPlayer;
 
 import java.awt.event.KeyEvent;
 
@@ -12,29 +13,38 @@ import java.awt.event.KeyEvent;
  *
  * @author cesar
  */
-public class RespostaCerta extends javax.swing.JFrame {
+public class RespostaErrada extends javax.swing.JFrame {
 
-    boolean ultima = false;
     String[] conta;
+    boolean ultima = false;
+    int vidas = 3;
 
-    // private jogo.Jogo JogoAtual;
     /**
-     * Creates new form respostaCerta
+     * Creates new form pergunta.resposta.RespostaCerta
      */
-    public RespostaCerta() {
+    public RespostaErrada() {
         initComponents();
     }
 
-    public RespostaCerta(boolean ultima, String[] conta) {
-        this.ultima = ultima;
+    public RespostaErrada(boolean ultima, String[] conta, int vidas) {
         this.conta = conta;
+        this.ultima = ultima;
+        this.vidas = vidas;
         initComponents();
-        if (ultima == true) {
+        if (ultima == true && vidas > 0) {
             descricaoCerto.setText("Você finalizou o jogo!");
         } else {
-            reprodutorMidia som = new reprodutorMidia("src/resources/certa.wav");
-            som.tocar();
+            MediaPlayer som = new MediaPlayer("src/resources/errada.wav");
+            som.play();
+            if (vidas == 0) {
+                descricaoCerto.setText("Você perdeu o jogo!");
+                ultima = true;
+            }
         }
+    }
+
+    RespostaErrada(JogoPergunta aThis) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**
@@ -63,14 +73,14 @@ public class RespostaCerta extends javax.swing.JFrame {
 
         jPanel1.setLayout(null);
 
-        iconeCerto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/certoIcone.png"))); // NOI18N
+        iconeCerto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/erradoIcone.png"))); // NOI18N
         jPanel1.add(iconeCerto);
         iconeCerto.setBounds(130, 10, 140, 140);
 
         tituloCerto.setFont(new java.awt.Font("Krungthep", 1, 24)); // NOI18N
-        tituloCerto.setForeground(new java.awt.Color(79, 186, 111));
+        tituloCerto.setForeground(new java.awt.Color(246, 0, 0));
         tituloCerto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        tituloCerto.setText("Resposta Certa!");
+        tituloCerto.setText("Resposta Errada!");
         jPanel1.add(tituloCerto);
         tituloCerto.setBounds(0, 160, 400, 30);
 
@@ -80,21 +90,16 @@ public class RespostaCerta extends javax.swing.JFrame {
         jLabel2.setBounds(230, 240, 70, 40);
 
         descricaoCerto.setFont(new java.awt.Font("Krungthep", 0, 18)); // NOI18N
-        descricaoCerto.setForeground(new java.awt.Color(79, 186, 111));
+        descricaoCerto.setForeground(new java.awt.Color(246, 0, 0));
         descricaoCerto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        descricaoCerto.setText("Você acertou essa pergunta!");
+        descricaoCerto.setText("Você errou esta pergunta!");
         jPanel1.add(descricaoCerto);
         descricaoCerto.setBounds(0, 190, 400, 30);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/botaoOK.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/botaoOkErrado.png"))); // NOI18N
         jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel1MouseClicked(evt);
-            }
-        });
-        jLabel1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(KeyEvent evt) {
-                jLabel1KeyPressed(evt);
             }
         });
         jPanel1.add(jLabel1);
@@ -117,10 +122,6 @@ public class RespostaCerta extends javax.swing.JFrame {
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
         this.dispose();
     }//GEN-LAST:event_jLabel1MouseClicked
-
-    private void jLabel1KeyPressed(KeyEvent evt) {//GEN-FIRST:event_jLabel1KeyPressed
-
-    }//GEN-LAST:event_jLabel1KeyPressed
 
     private void formKeyPressed(KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -159,7 +160,7 @@ public class RespostaCerta extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new RespostaCerta().setVisible(true);
+                new RespostaErrada().setVisible(true);
             }
         });
     }

@@ -8,21 +8,18 @@ import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
 
-/**
- *
- * @author cesar
- */
-public class reprodutorMidia {
 
-    String midia;
+public class MediaPlayer {
 
-    public reprodutorMidia(String midia) {
-        this.midia = midia;
+    String media;
+
+    public MediaPlayer(String midia) {
+        this.media = midia;
     }
 
-    public void tocar() {
+    public void play() {
         try {
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(midia).getAbsoluteFile());
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(media).getAbsoluteFile());
             Clip clip = AudioSystem.getClip();
             clip.open(audioInputStream);
             clip.start();
