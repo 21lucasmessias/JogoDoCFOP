@@ -13,6 +13,8 @@ import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import screen.Login;
+
 import static java.awt.Font.PLAIN;
 import static javax.swing.JOptionPane.showMessageDialog;
 import static javax.swing.SwingConstants.CENTER;
@@ -32,8 +34,8 @@ public class Register extends JFrame {
 
     private void handleExitPress(MouseEvent evt) {
         Login login = new Login();
-        login.setLocationRelativeTo(null);
-        login.setVisible(true);
+        //login.setLocationRelativeTo(null);
+        //login.setVisible(true);
         this.dispose();
     }
 

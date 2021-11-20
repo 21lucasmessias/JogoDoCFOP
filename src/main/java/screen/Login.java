@@ -1,8 +1,8 @@
-package login;
+package screen;
 
 import game.Game;
 import home.Home;
-import org.jdesktop.layout.GroupLayout;
+import login.Register;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,22 +13,19 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static java.awt.Font.PLAIN;
 import static javax.swing.JOptionPane.showMessageDialog;
 import static javax.swing.SwingConstants.CENTER;
 import static utils.ImageUtils.getImage;
 
-public class Login extends JFrame {
+public class Login {
 
     private JPasswordField inputPassword;
     private JTextField inputEmail;
-    private JPanel mainPanel;
 
     public Login() {
-        setTitle("Jogo do CFOP");
-
-        createUIComponents();
         fillLogin();
     }
 
@@ -64,7 +61,7 @@ public class Login extends JFrame {
         Register newAccount = new Register();
         newAccount.setLocationRelativeTo(null);
         newAccount.setVisible(true);
-        this.dispose();
+        //this.dispose();
     }
 
     private void handleEnterPress(KeyEvent evt) {
@@ -102,7 +99,7 @@ public class Login extends JFrame {
                         Home jogo = new Home(account);
                         jogo.setLocationRelativeTo(null);
                         jogo.setVisible(true);
-                        this.dispose();
+                        //this.dispose();
                     } else {
                         showMessageDialog(null, "Senha incorreta.");
                         inputPassword.setText("");
@@ -116,8 +113,9 @@ public class Login extends JFrame {
         }
     }
 
-    private void createUIComponents() {
-        mainPanel = new JPanel();
+    public ArrayList<JComponent> getAllComponents() {
+        ArrayList<JComponent> listOfComponents = new ArrayList<JComponent>();
+
         inputEmail = new JTextField();
         inputPassword = new JPasswordField();
         JLabel titleLeft = new JLabel();
@@ -130,34 +128,28 @@ public class Login extends JFrame {
         JLabel background = new JLabel();
         JLabel backgroundContent = new JLabel();
 
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-        setResizable(false);
-
-        mainPanel.setLayout(null);
-
         titleLeft.setIcon(new ImageIcon(getImage("title_left.png")));
-        mainPanel.add(titleLeft);
+        listOfComponents.add(titleLeft);
         titleLeft.setBounds(20, 20, 216, 34);
 
         tituloLogin.setFont(new Font("Krungthep", PLAIN, 24));
         tituloLogin.setHorizontalAlignment(CENTER);
         tituloLogin.setText("Login");
-        mainPanel.add(tituloLogin);
+        listOfComponents.add(tituloLogin);
         tituloLogin.setBounds(610, 150, 100, 50);
 
         tituloEmail.setFont(new Font("Krungthep", PLAIN, 18));
         tituloEmail.setText("E-MAIL:");
-        mainPanel.add(tituloEmail);
+        listOfComponents.add(tituloEmail);
         tituloEmail.setBounds(370, 270, 110, 24);
 
         inputEmail.setFont(new Font("Roboto", PLAIN, 18));
-        mainPanel.add(inputEmail);
+        listOfComponents.add(inputEmail);
         inputEmail.setBounds(490, 260, 480, 40);
 
         tituloPassword.setFont(new Font("Krungthep", PLAIN, 18));
         tituloPassword.setText("SENHA:");
-        mainPanel.add(tituloPassword);
+        listOfComponents.add(tituloPassword);
         tituloPassword.setBounds(370, 360, 110, 24);
 
         inputPassword.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -165,7 +157,7 @@ public class Login extends JFrame {
                 handleEnterPress(evt);
             }
         });
-        mainPanel.add(inputPassword);
+        listOfComponents.add(inputPassword);
         inputPassword.setBounds(490, 350, 480, 40);
 
         btnLogin.setIcon(new ImageIcon(getImage("botaoEntrar.png")));
@@ -174,7 +166,7 @@ public class Login extends JFrame {
                 handleLoginPress(evt);
             }
         });
-        mainPanel.add(btnLogin);
+        listOfComponents.add(btnLogin);
         btnLogin.setBounds(440, 470, 180, 50);
 
         btnRegister.setIcon(new ImageIcon(getImage("botaoCriarConta.png")));
@@ -183,11 +175,11 @@ public class Login extends JFrame {
                 handleRegisterPress(evt);
             }
         });
-        mainPanel.add(btnRegister);
+        listOfComponents.add(btnRegister);
         btnRegister.setBounds(680, 470, 240, 50);
 
         backgroundContent.setIcon(new ImageIcon(getImage("backgroundConquistas.png")));
-        mainPanel.add(backgroundContent);
+        listOfComponents.add(backgroundContent);
         backgroundContent.setBounds(270, 130, 784, 500);
 
         btnExit.setIcon(new ImageIcon(getImage("botaoSairBottom.png")));
@@ -196,18 +188,13 @@ public class Login extends JFrame {
                 handleExitPress(evt);
             }
         });
-        mainPanel.add(btnExit);
+        listOfComponents.add(btnExit);
         btnExit.setBounds(1170, 710, 180, 45);
 
         background.setIcon(new ImageIcon(getImage("fundo_sistema.jpg")));
-        mainPanel.add(background);
+        listOfComponents.add(background);
         background.setBounds(0, 0, 1366, 770);
 
-        GroupLayout layout = new GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.LEADING).add(mainPanel, GroupLayout.DEFAULT_SIZE, 1366, Short.MAX_VALUE));
-        layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.LEADING).add(mainPanel, GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE));
-
-        pack();
+        return listOfComponents;
     }
 }

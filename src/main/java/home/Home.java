@@ -9,7 +9,7 @@ package home;/*
 import game.Game;
 import game.GameInstruction;
 import game.JogoInstrucaoNota;
-import login.Login;
+import screen.Login;
 
 import javax.swing.*;
 import java.io.BufferedReader;
@@ -122,8 +122,8 @@ public class Home extends javax.swing.JFrame {
                 JOptionPane.QUESTION_MESSAGE);
         if (result == JOptionPane.YES_OPTION) {
             Login entrar = new Login();
-            entrar.setLocationRelativeTo(null);
-            entrar.setVisible(true);
+            //entrar.setLocationRelativeTo(null);
+            //entrar.setVisible(true);
             this.dispose();
         }
     }//GEN-LAST:event_btnSairMouseClicked

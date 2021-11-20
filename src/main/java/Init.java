@@ -1,10 +1,9 @@
-import login.Login;
+import screen.Screen;
 
 public class Init {
 
     public static void main(String[] args) {
-        Login login = new Login();
-        login.setLocationRelativeTo(null);
-        login.setVisible(true);
+        Screen screen = Screen.getScreen();
+        screen.setScreen("Login");
     }
 }
