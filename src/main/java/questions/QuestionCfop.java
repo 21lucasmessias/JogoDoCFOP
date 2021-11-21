@@ -1,83 +1,50 @@
-package questions;/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+package questions;
 
-/**
- *
- * @author Eder e Raimundo Osvaldo
- */
 public class QuestionCfop extends Question {
 
-    private int operacao;
-    private String emissora;
-    private String remetente;
-    private String destinatario;
+    private int operation;
+    private String town;
+    private String sender;
+    private String receiver;
 
-    public QuestionCfop(int num, int op, String emissora, String remet, String desti, String titulo, int opcoes[], int respostaCerta) {
-        super(num, titulo, opcoes, respostaCerta);
-        this.operacao = op;
-        this.emissora = emissora;
-        this.remetente = remet;
-        this.destinatario = desti;
-        //System.out.println("pergunta.Pergunta criada | Numero: " + this.num + " | Operacao: " + this.op + " | Cidade Emissora: " + this.emissora + " | Remetente: " + this.remet + " | Destinatário: " + this.desti + " | Titulo: " + this.titulo + " | Respostas: " + Arrays.toString(this.respostas) + " | Resposta certa: " + this.respostaCerta);
+    public QuestionCfop(int num, int op, String town, String sender, String receiver, String title, int options[], int rightAnswer) {
+        super(num, title, options, rightAnswer);
+        this.operation = op;
+        this.town = town;
+        this.sender = sender;
+        this.receiver = receiver;
     }
 
-    /**
-     * @return the op
-     */
-    public int getOperacao() {
-        return operacao;
+    public int getOperation() {
+        return operation;
     }
 
-    /**
-     * @param op the op to set
-     */
-    public void setOperacao(int op) {
-        this.operacao = op;
+    public void setOperation(int op) {
+        this.operation = op;
     }
 
-    /**
-     * @return the emissora
-     */
-    public String getEmissora() {
-        return emissora;
+    public String getTown() {
+        return town;
     }
 
-    /**
-     * @param emissora the emissora to set
-     */
     public void setEmissora(String emissora) {
-        this.emissora = emissora;
+        this.town = emissora;
     }
 
-    /**
-     * @return the remet
-     */
-    public String getRemetente() {
-        return remetente;
+    public String getSender() {
+        return sender;
     }
 
-    /**
-     * @param remet the remet to set
-     */
     public void setRemetente(String remet) {
-        this.remetente = remet;
+        this.sender = remet;
     }
 
-    /**
-     * @return the desti
-     */
-    public String getDestinatario() {
-        return destinatario;
+    public String getReceiver() {
+        return receiver;
     }
 
-    /**
-     * @param desti the desti to set
-     */
     public void setDestinatario(String desti) {
-        this.destinatario = desti;
+        this.receiver = desti;
     }
 
 }

@@ -2,6 +2,7 @@ package game;
 
 public class Game {
 
+    private static Game instance;
     private int status;
     private int score;
     private int questions;
@@ -10,8 +11,8 @@ public class Game {
     private int seq;
     private int questionsQuantity;
     private String login;
-    private static Game instance;
     private int lvl;
+    private String[] account = null;
 
     private Game() {
         this.status = 1;
@@ -82,6 +83,10 @@ public class Game {
         return seq;
     }
 
+    public void setSeq(int seq) {
+        this.seq = seq;
+    }
+
     public String getLogin() {
         return this.login;
     }
@@ -90,15 +95,19 @@ public class Game {
         this.login = login;
     }
 
-    public void setSeq(int seq) {
-        this.seq = seq;
+    public int getLvl() {
+        return this.lvl;
     }
 
     public void setLvl(int lvl) {
         this.lvl = lvl;
     }
 
-    public int getLvl() {
-        return this.lvl;
+    public void setAccount(String[] account) {
+        this.account = account;
+    }
+
+    public String[] getAccount() {
+        return this.account;
     }
 }

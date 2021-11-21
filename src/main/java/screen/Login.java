@@ -1,8 +1,6 @@
 package screen;
 
 import game.Game;
-import home.Home;
-import login.Register;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,8 +20,8 @@ import static utils.ImageUtils.getImage;
 
 public class Login {
 
-    private JPasswordField inputPassword;
-    private JTextField inputEmail;
+    private JPasswordField inputPassword = new JPasswordField();
+    private JTextField inputEmail = new JTextField();
 
     public Login() {
         fillLogin();
@@ -58,10 +56,7 @@ public class Login {
     }
 
     private void handleRegisterPress(MouseEvent evt) {
-        Register newAccount = new Register();
-        newAccount.setLocationRelativeTo(null);
-        newAccount.setVisible(true);
-        //this.dispose();
+        Screen.getScreen().setScreen("Register");
     }
 
     private void handleEnterPress(KeyEvent evt) {
@@ -96,10 +91,9 @@ public class Login {
                     if (account[1].equals(strPass)) {
                         Game game = Game.getInstance();
                         game.setLogin(inputEmail.getText());
-                        Home jogo = new Home(account);
-                        jogo.setLocationRelativeTo(null);
-                        jogo.setVisible(true);
-                        //this.dispose();
+                        game.setAccount(account);
+
+                        Screen.getScreen().setScreen("Home");
                     } else {
                         showMessageDialog(null, "Senha incorreta.");
                         inputPassword.setText("");
@@ -116,12 +110,10 @@ public class Login {
     public ArrayList<JComponent> getAllComponents() {
         ArrayList<JComponent> listOfComponents = new ArrayList<JComponent>();
 
-        inputEmail = new JTextField();
-        inputPassword = new JPasswordField();
         JLabel titleLeft = new JLabel();
-        JLabel tituloLogin = new JLabel();
-        JLabel tituloEmail = new JLabel();
-        JLabel tituloPassword = new JLabel();
+        JLabel titleLogin = new JLabel();
+        JLabel titleEmail = new JLabel();
+        JLabel titlePassword = new JLabel();
         JLabel btnLogin = new JLabel();
         JLabel btnRegister = new JLabel();
         JLabel btnExit = new JLabel();
@@ -132,25 +124,25 @@ public class Login {
         listOfComponents.add(titleLeft);
         titleLeft.setBounds(20, 20, 216, 34);
 
-        tituloLogin.setFont(new Font("Krungthep", PLAIN, 24));
-        tituloLogin.setHorizontalAlignment(CENTER);
-        tituloLogin.setText("Login");
-        listOfComponents.add(tituloLogin);
-        tituloLogin.setBounds(610, 150, 100, 50);
+        titleLogin.setFont(new Font("Krungthep", PLAIN, 24));
+        titleLogin.setHorizontalAlignment(CENTER);
+        titleLogin.setText("Login");
+        listOfComponents.add(titleLogin);
+        titleLogin.setBounds(610, 150, 100, 50);
 
-        tituloEmail.setFont(new Font("Krungthep", PLAIN, 18));
-        tituloEmail.setText("E-MAIL:");
-        listOfComponents.add(tituloEmail);
-        tituloEmail.setBounds(370, 270, 110, 24);
+        titleEmail.setFont(new Font("Krungthep", PLAIN, 18));
+        titleEmail.setText("E-MAIL:");
+        listOfComponents.add(titleEmail);
+        titleEmail.setBounds(370, 270, 110, 24);
 
         inputEmail.setFont(new Font("Roboto", PLAIN, 18));
         listOfComponents.add(inputEmail);
         inputEmail.setBounds(490, 260, 480, 40);
 
-        tituloPassword.setFont(new Font("Krungthep", PLAIN, 18));
-        tituloPassword.setText("SENHA:");
-        listOfComponents.add(tituloPassword);
-        tituloPassword.setBounds(370, 360, 110, 24);
+        titlePassword.setFont(new Font("Krungthep", PLAIN, 18));
+        titlePassword.setText("SENHA:");
+        listOfComponents.add(titlePassword);
+        titlePassword.setBounds(370, 360, 110, 24);
 
         inputPassword.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(KeyEvent evt) {

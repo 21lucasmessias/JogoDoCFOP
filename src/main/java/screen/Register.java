@@ -1,6 +1,4 @@
-package login;
-
-import org.jdesktop.layout.GroupLayout;
+package screen;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,9 +8,11 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import game.Game;
 import screen.Login;
 
 import static java.awt.Font.PLAIN;
@@ -22,21 +22,13 @@ import static utils.ImageUtils.getImage;
 
 public class Register extends JFrame {
 
-    private JPanel mainPanel;
-    private JTextField inputRole;
-    private JTextField inputEmail;
-    private JTextField inputName;
-    private JPasswordField inputPassword;
-
-    public Register() {
-        createUIComponents();
-    }
+    private final JTextField inputRole = new JTextField();
+    private final JTextField inputEmail = new JTextField();
+    private final JTextField inputName = new JTextField();
+    private final JPasswordField inputPassword = new JPasswordField();
 
     private void handleExitPress(MouseEvent evt) {
-        Login login = new Login();
-        //login.setLocationRelativeTo(null);
-        //login.setVisible(true);
-        this.dispose();
+        Screen.getScreen().setScreen("Login");
     }
 
     private boolean isFormValid() {
@@ -54,13 +46,6 @@ public class Register extends JFrame {
             return false;
         }
         return true;
-    }
-
-    private void clearForm() {
-        inputEmail.setText("");
-        inputPassword.setText("");
-        inputName.setText("");
-        inputRole.setText("");
     }
 
     private void createAccount() {
@@ -82,7 +67,11 @@ public class Register extends JFrame {
                             + achievements[4] + "," + achievements[5]);
 
                     showMessageDialog(null, "Conta criada com sucesso.");
-                    clearForm();
+
+                    String[] account = {inputEmail.getText(), strPass};
+                    Game.getInstance().setAccount(account);
+
+                    Screen.getScreen().setScreen("Home");
                 } catch (FileNotFoundException ex) {
                     Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -99,12 +88,9 @@ public class Register extends JFrame {
             createAccount();
     }
 
-    private void createUIComponents() {
-        mainPanel = new JPanel();
-        inputEmail = new JTextField();
-        inputPassword = new JPasswordField();
-        inputName = new JTextField();
-        inputRole = new JTextField();
+    public ArrayList<JComponent> getAllComponents() {
+        ArrayList<JComponent> listOfComponents = new ArrayList<JComponent>();
+
         JLabel titleLeft = new JLabel();
         JLabel titleLogin = new JLabel();
         JLabel titleEmail = new JLabel();
@@ -116,50 +102,44 @@ public class Register extends JFrame {
         JLabel btnCreateAccount = new JLabel();
         JLabel btnExit = new JLabel();
 
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-        setResizable(false);
-
-        mainPanel.setLayout(null);
-
         titleLeft.setIcon(new ImageIcon(getImage("title_left.png")));
-        mainPanel.add(titleLeft);
+        listOfComponents.add(titleLeft);
         titleLeft.setBounds(20, 20, 216, 34);
 
         titleLogin.setFont(new Font("Krungthep", PLAIN, 24));
         titleLogin.setHorizontalAlignment(CENTER);
         titleLogin.setText("Cadastro");
-        mainPanel.add(titleLogin);
+        listOfComponents.add(titleLogin);
         titleLogin.setBounds(270, 150, 780, 50);
 
         titleEmail.setFont(new Font("Krungthep", PLAIN, 18));
         titleEmail.setText("E-MAIL:");
-        mainPanel.add(titleEmail);
+        listOfComponents.add(titleEmail);
         titleEmail.setBounds(370, 270, 110, 24);
 
         inputEmail.setFont(new Font("Roboto", PLAIN, 18));
-        mainPanel.add(inputEmail);
+        listOfComponents.add(inputEmail);
         inputEmail.setBounds(490, 260, 480, 40);
 
         titlePassword.setFont(new Font("Krungthep", PLAIN, 18));
         titlePassword.setText("SENHA:");
-        mainPanel.add(titlePassword);
+        listOfComponents.add(titlePassword);
         titlePassword.setBounds(370, 330, 110, 24);
-        mainPanel.add(inputPassword);
+        listOfComponents.add(inputPassword);
         inputPassword.setBounds(490, 320, 480, 40);
 
         titleName.setFont(new Font("Krungthep", PLAIN, 18));
         titleName.setText("NOME:");
-        mainPanel.add(titleName);
+        listOfComponents.add(titleName);
         titleName.setBounds(370, 390, 110, 24);
 
         inputName.setFont(new Font("Roboto", PLAIN, 18));
-        mainPanel.add(inputName);
+        listOfComponents.add(inputName);
         inputName.setBounds(490, 380, 480, 40);
 
         titleRole.setFont(new Font("Krungthep", PLAIN, 18));
         titleRole.setText("CARGO:");
-        mainPanel.add(titleRole);
+        listOfComponents.add(titleRole);
         titleRole.setBounds(370, 450, 110, 24);
 
         inputRole.setFont(new Font("Roboto", PLAIN, 18));
@@ -168,7 +148,7 @@ public class Register extends JFrame {
                 handleEnterPress(evt);
             }
         });
-        mainPanel.add(inputRole);
+        listOfComponents.add(inputRole);
         inputRole.setBounds(490, 440, 480, 40);
 
         btnCreateAccount.setIcon(new ImageIcon(getImage("botaoCriarCadastro.png")));
@@ -177,11 +157,11 @@ public class Register extends JFrame {
                 handleCreateAccountPress(evt);
             }
         });
-        mainPanel.add(btnCreateAccount);
+        listOfComponents.add(btnCreateAccount);
         btnCreateAccount.setBounds(550, 530, 290, 50);
 
         backgroundContent.setIcon(new ImageIcon(getImage("backgroundConquistas.png")));
-        mainPanel.add(backgroundContent);
+        listOfComponents.add(backgroundContent);
         backgroundContent.setBounds(270, 130, 784, 500);
 
         btnExit.setIcon(new ImageIcon(getImage("botaoVoltar.png")));
@@ -190,24 +170,13 @@ public class Register extends JFrame {
                 handleExitPress(evt);
             }
         });
-        mainPanel.add(btnExit);
+        listOfComponents.add(btnExit);
         btnExit.setBounds(1140, 710, 210, 45);
 
         background.setIcon(new ImageIcon(getImage("fundo_sistema.jpg")));
-        mainPanel.add(background);
+        listOfComponents.add(background);
         background.setBounds(0, 0, 1366, 770);
 
-        GroupLayout layout = new GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-                layout.createParallelGroup(GroupLayout.LEADING)
-                        .add(mainPanel, GroupLayout.DEFAULT_SIZE, 1366, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-                layout.createParallelGroup(GroupLayout.LEADING)
-                        .add(mainPanel, GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
-        );
-
-        pack();
+        return listOfComponents;
     }
 }

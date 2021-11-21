@@ -1,82 +1,55 @@
-package questions;/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+package questions;
 
-//import java.util.Arrays;
-/**
- *
- * @author cesar, eder e raimundo
- */
+import java.util.Arrays;
+
 public abstract class Question {
 
     private int num;
-    private String titulo;
-    private int[] opcoes;
-    private int respostaCerta;
+    private String title;
+    private int[] options;
+    private int rightAnswer;
 
-    public Question(int num, String titulo, int respostas[], int respostaCerta) {
+    public Question(int num, String title, int[] answers, int rightAnswer) {
         this.num = num;
-        this.titulo = titulo;
-        this.opcoes = respostas;
-        this.respostaCerta = respostaCerta;
+        this.title = title;
+        this.options = answers;
+        this.rightAnswer = rightAnswer;
     }
 
-    /**
-     * @return the num
-     */
     public int getNum() {
         return num;
     }
 
-    /**
-     * @param num the num to set
-     */
     public void setNum(int num) {
         this.num = num;
     }
 
-    /**
-     * @return the titulo
-     */
-    public String getTitulo() {
-        return titulo;
+    public String getTitle() {
+        return title;
     }
 
-    /**
-     * @param titulo the titulo to set
-     */
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    /**
-     * @return the respostas
-     */
-    public int[] getRespostas() {
-        return opcoes;
+    public int[] getAnswers() {
+        return options;
     }
 
-    /**
-     * @param respostas the respostas to set
-     */
-    public void setRespostas(int[] respostas) {
-        this.opcoes = respostas;
+    public void setAnswers(int[] answers) {
+        this.options = answers;
     }
 
-    /**
-     * @return the respostaCerta
-     */
-    public int getRespostaCerta() {
-        return respostaCerta;
+    public int getRightAnswer() {
+        return rightAnswer;
     }
 
-    /**
-     * @param respostaCerta the respostaCerta to set
-     */
-    public void setRespostaCerta(int respostaCerta) {
-        this.respostaCerta = respostaCerta;
+    public void setRightAnswer(int rightAnswer) {
+        this.rightAnswer = rightAnswer;
     }
 
+    @Override
+    public String toString() {
+        return "num: " + this.num + " title: " + this.title + " options " + Arrays.toString(this.options) + "  rightAnswer: " + this.rightAnswer;
+    }
 }
