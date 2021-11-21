@@ -15,14 +15,10 @@ public class RightAnswer extends JFrame {
     private JPanel jPanel1;
     private JLabel tituloCerto;
 
-    public RightAnswer(boolean last) {
+    public RightAnswer() {
         initComponents();
-        if (last) {
-            finish.setText("Você finalizou o jogo!");
-        } else {
-            MediaPlayer som = new MediaPlayer("src/main/resources/certa.wav");
-            som.play();
-        }
+        MediaPlayer som = new MediaPlayer("src/main/resources/certa.wav");
+        som.play();
     }
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {

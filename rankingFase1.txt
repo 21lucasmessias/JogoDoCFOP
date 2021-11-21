@@ -1,2 +1,5 @@
 1,lucas@hotmail.com,lucas,70
 1,lucas@hotmail.com,lucas,-90
+1,lucas@hotmail.com,lucas,640
+1,lucas@hotmail.com,lucas,1360
+1,lucas@hotmail.com,lucas,1360

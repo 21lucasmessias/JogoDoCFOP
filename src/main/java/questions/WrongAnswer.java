@@ -16,25 +16,15 @@ public class WrongAnswer extends JFrame {
     private JPanel jPanel1;
     private JLabel tituloCerto;
 
-    boolean ultima = false;
     int vidas = 3;
 
-    public WrongAnswer() {
-        initComponents();
-    }
-
-    public WrongAnswer(boolean last, int lifes) {
-        this.ultima = last;
+    public WrongAnswer(int lifes) {
         this.vidas = lifes;
         initComponents();
-        if (last == true && lifes > 0) {
-            finish.setText("Você finalizou o jogo!");
-        } else {
+        if (lifes == 0) {
             MediaPlayer som = new MediaPlayer("src/main/resources/errada.wav");
             som.play();
-            if (lifes == 0) {
-                finish.setText("Você perdeu o jogo!");
-            }
+            finish.setText("Você perdeu o jogo!");
         }
     }
 

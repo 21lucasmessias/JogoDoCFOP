@@ -3,3 +3,5 @@
 2,lucas@hotmail.com,lucas,0
 2,lucas@hotmail.com,lucas,0
 2,teste,lucas,0
+2,lucas@hotmail.com,lucas,0
+2,lucas@hotmail.com,lucas,640

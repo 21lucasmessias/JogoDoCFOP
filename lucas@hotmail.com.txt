@@ -1,1 +1,1 @@
-lucas@hotmail.com,teste,lucas,estagiario,não,8,1,1,1,1,1,0
+lucas@hotmail.com,teste,lucas,estagiario,sim,8,1,1,1,1,1,1

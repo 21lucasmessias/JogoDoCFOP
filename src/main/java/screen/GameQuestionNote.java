@@ -94,9 +94,40 @@ public class GameQuestionNote {
         option2.setText(String.valueOf(answers[1]));
         option3.setText(String.valueOf(answers[2]));
         option4.setText(String.valueOf(answers[3]));
+
+        this.showRightAnswer();
+
         Memento timeLoaded = new Memento(Instant.now());
         addMemento(timeLoaded);
     }
+
+    private void showRightAnswer() {
+        if(currentQuestion.getRightAnswer() == 1){
+            option1.setBackground(Color.BLUE);
+            option2.setBackground(Color.BLACK);
+            option3.setBackground(Color.BLACK);
+            option4.setBackground(Color.BLACK);
+        }
+        else if(currentQuestion.getRightAnswer() == 2){
+            option2.setBackground(Color.BLUE);
+            option1.setBackground(Color.BLACK);
+            option3.setBackground(Color.BLACK);
+            option4.setBackground(Color.BLACK);
+        }
+        else if(currentQuestion.getRightAnswer() == 3){
+            option3.setBackground(Color.BLUE);
+            option2.setBackground(Color.BLACK);
+            option1.setBackground(Color.BLACK);
+            option4.setBackground(Color.BLACK);
+        }
+        else if(currentQuestion.getRightAnswer() == 4){
+            option4.setBackground(Color.BLUE);
+            option2.setBackground(Color.BLACK);
+            option3.setBackground(Color.BLACK);
+            option1.setBackground(Color.BLACK);
+        }
+    }
+
 
     private void updateInfo() {
 
@@ -171,64 +202,65 @@ public class GameQuestionNote {
             updateInfo();
         }
     }
-//desabilita campos respostas
 
     public void disableAnswers() {
         option1.setEnabled(false);
         option2.setEnabled(false);
         option3.setEnabled(false);
         option4.setEnabled(false);
-
     }
 
     private void AnswerQuestion(int option) {
         if (option >= 1 && option <= 4) {
             answerTime = Duration.between(getMemento().getActionTime(), mementos.get(0).getActionTime());
-            System.out.println("pergunta.resposta: " + option + " Resposta Certa: " + currentQuestion.getRightAnswer() + " Tempo levado: " + answerTime.toSeconds() + " segundos.");
+
             if (currentQuestion.getRightAnswer() == option) {
                 currentGame.setRightAnswers(currentGame.getRightAnswers() + 1);
                 currentGame.setScore(currentGame.getScore() + 80);
                 currentGame.setSeq(currentGame.getSeq() + 1);
-                RightAnswer feedback;
-                if (currentGame.getQuestions() < 19 && currentGame.getWrongAnswers() < 3) {
-                    feedback = new RightAnswer(false);
-                } else {
-                    feedback = new RightAnswer(true);
-                    feedback.setLocationRelativeTo(null);
+
+                if(currentGame.getQuestions() != numberOfQuestions) {
+                    RightAnswer feedback;
+                    feedback = new RightAnswer();
+                    feedback.setDefaultCloseOperation(RightAnswer.DO_NOTHING_ON_CLOSE);
+                    feedback.setVisible(true);
                 }
-                feedback.setDefaultCloseOperation(RightAnswer.DO_NOTHING_ON_CLOSE);
-                feedback.setVisible(true);
             } else {
                 currentGame.setWrongAnswers(currentGame.getWrongAnswers() + 1);
                 currentGame.setScore(currentGame.getScore() - 30);
                 currentGame.setSeq(0);
                 int lifes = updateLifes();
-                WrongAnswer feedback;
-                if (currentGame.getQuestions() < 19 && currentGame.getWrongAnswers() < 3) {
-                    feedback = new WrongAnswer(false, lifes);
-                } else {
-                    feedback = new WrongAnswer(true, lifes);
-                    feedback.setLocationRelativeTo(null);
+
+                if(currentGame.getQuestions() != numberOfQuestions) {
+                    WrongAnswer feedback;
+                    feedback = new WrongAnswer(lifes);
+                    feedback.setDefaultCloseOperation(WrongAnswer.DO_NOTHING_ON_CLOSE);
+                    feedback.setVisible(true);
                 }
-                feedback.setDefaultCloseOperation(WrongAnswer.DO_NOTHING_ON_CLOSE);
-                feedback.setVisible(true);
             }
-            if (currentGame.getQuestions() >= 21 || currentGame.getWrongAnswers() == 3) {
+            if (currentGame.getWrongAnswers() == 3) {
                 PrincipalMenu();
             }
-            // atualiza o level 
+
             currentGame.setQuestions(currentGame.getQuestions() + 1);
-            if (currentGame.getQuestions() <= 21) {
+
+            if(currentGame.getQuestions() != numberOfQuestions){
                 levelState.setText(Integer.toString(currentGame.getQuestions()));
-                if (currentGame.getQuestions() == numberOfQuestions + 1) {
-                    btnResult.setEnabled(true);
-                    disableAnswers();
-                }
-
             } else {
-                levelState.setText("?");
-            }
+                JFrame frame = new JFrame();
+                int goToResult = JOptionPane.showConfirmDialog(
+                        frame,
+                        "Sessão completada, quantidade de questões finalizadas, deseja continuar jogando adicionando mais 8 questões?",
+                        "Escolha uma opção",
+                        JOptionPane.YES_NO_OPTION
+                );
 
+                if(goToResult == JOptionPane.YES_OPTION){
+                    this.numberOfQuestions = currentGame.getQuestionsQuantity() + 8;
+                } else {
+                    Screen.getScreen().setScreen("GameResult");
+                }
+            }
         } else {
             JOptionPane.showMessageDialog(null, "Resposta Inválida.");
         }
@@ -239,7 +271,6 @@ public class GameQuestionNote {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println("Situacao: " + currentGame.getStatus() + " Pontuacao: " + currentGame.getScore() + " Perguntas: " + currentGame.getQuestions() + " Acertos: " + currentGame.getRightAnswers() + " Erros: " + currentGame.getWrongAnswers() + " Seq: " + currentGame.getSeq());
     }
 
     public void PrincipalMenu() {
@@ -536,7 +567,6 @@ public class GameQuestionNote {
     }
 
     private void btnLeaveMouseClicked(java.awt.event.MouseEvent evt) {
-
         int result = JOptionPane.showConfirmDialog(null, "Você tem certeza que deseja sair?", "Encerrar Tentativa", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (result == JOptionPane.YES_OPTION) {
             PrincipalMenu();
