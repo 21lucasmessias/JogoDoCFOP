@@ -200,6 +200,7 @@ public class GameQuestionNote {
                 feedback.setVisible(true);
             } else {
                 currentGame.setWrongAnswers(currentGame.getWrongAnswers() + 1);
+                currentGame.setScore(currentGame.getScore() - 30);
                 currentGame.setSeq(0);
                 int lifes = updateLifes();
                 WrongAnswer feedback;

@@ -77,6 +77,11 @@ public class Home {
         validatePlayerLevel();
     }
 
+    private void btnRankingMouseClicked(java.awt.event.MouseEvent evt) {
+        Screen.getScreen().setScreen("GameResult", true);
+    }
+
+
     public ArrayList<JComponent> getAllComponents() {
 
         ArrayList<JComponent> listOfComponents = new ArrayList<JComponent>();
@@ -84,13 +89,24 @@ public class Home {
         JLabel gameCFOP = new JLabel();
         JLabel buttonPlay = new JLabel();
         JLabel buttonAchievements = new JLabel();
+        JLabel buttonRanking = new JLabel();
         JLabel buttonLeave = new JLabel();
         JLabel jLabel1 = new JLabel();
         JLabel background = new JLabel();
 
         gameCFOP.setIcon(new ImageIcon(getImage("titulo.png")));
         listOfComponents.add(gameCFOP);
-        gameCFOP.setBounds(320, 80, 730, 130);
+        gameCFOP.setBounds(320, 20, 730, 130);
+
+        buttonRanking.setIcon(new ImageIcon(getImage("botaoResultadoe.png")));
+        buttonRanking.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnRankingMouseClicked(evt);
+            }
+        });
+        listOfComponents.add(buttonRanking);
+        buttonRanking.setBounds(510, 170, 354, 90);
+
 
         buttonPlay.setIcon(new ImageIcon(getImage("botaoJogar.png")));
         buttonPlay.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -99,7 +115,7 @@ public class Home {
             }
         });
         listOfComponents.add(buttonPlay);
-        buttonPlay.setBounds(510, 260, 354, 90);
+        buttonPlay.setBounds(510, 290, 354, 90);
 
         buttonAchievements.setIcon(new ImageIcon(getImage("botaoConquistas.png")));
         buttonAchievements.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -108,7 +124,7 @@ public class Home {
             }
         });
         listOfComponents.add(buttonAchievements);
-        buttonAchievements.setBounds(510, 380, 354, 89);
+        buttonAchievements.setBounds(510, 410, 354, 89);
 
         buttonLeave.setIcon(new ImageIcon(getImage("botaoSair.png")));
         buttonLeave.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -117,7 +133,7 @@ public class Home {
             }
         });
         listOfComponents.add(buttonLeave);
-        buttonLeave.setBounds(510, 500, 354, 89);
+        buttonLeave.setBounds(510, 530, 354, 89);
 
         jLabel1.setFont(new java.awt.Font("Krungthep", 0, 18));
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));

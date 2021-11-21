@@ -15,7 +15,36 @@ import java.util.stream.Stream;
 
 import static utils.ImageUtils.getImage;
 
-public class GameResult extends JFrame {
+public class GameResult {
+
+    JLabel btnNextLvlAchievements = new JLabel();
+    JLabel emailFirstPlace = new JLabel();
+    JLabel emailFourthPlace = new JLabel();
+    JLabel emailFifthPlace = new JLabel();
+    JLabel emailSecondPlace = new JLabel();
+    JLabel emailThirdPlace = new JLabel();
+    JLabel totalPointsBackground = new JLabel();
+    JLabel firstPlaceName = new JLabel();
+    JLabel fourthPlaceName = new JLabel();
+    JLabel fifthPlaceName = new JLabel();
+    JLabel secondPlaceName = new JLabel();
+    JLabel thirdPlaceName = new JLabel();
+    JLabel CorrectPoints = new JLabel();
+    JLabel WrongPoints = new JLabel();
+    JLabel firstPlacePoints = new JLabel();
+    JLabel fourthPlacePoints = new JLabel();
+    JLabel fifthPlacePoints = new JLabel();
+    JLabel secondPlacePoints = new JLabel();
+    JLabel thirdPlacePoints = new JLabel();
+    JLabel star1 = new JLabel();
+    JLabel star2 = new JLabel();
+    JLabel star3 = new JLabel();
+    JLabel star4 = new JLabel();
+    JLabel star5 = new JLabel();
+    JLabel star6 = new JLabel();
+    JLabel QuestionsTitle = new JLabel();
+    JLabel totalQuestions = new JLabel();
+    JLabel totalPoints = new JLabel();
 
     private Game game = Game.getInstance();
     String[] account = Game.getInstance().getAccount();
@@ -27,14 +56,22 @@ public class GameResult extends JFrame {
     private static final int TROPHY6 = 11;
     private String fileName;
 
-    public GameResult() {
-        fillAchievements();
-        ranking();
-        if (game.getLvl() == 2) {
-            fillIcon();
-        }
+    private boolean isFromHome;
+
+    public GameResult() {}
+
+    public GameResult(boolean isFromHome) {
+        this.isFromHome = isFromHome;
     }
 
+    public void fillFields() {
+
+            fillAchievements();
+            ranking();
+            if (game.getLvl() == 2) {
+                fillIcon();
+            }
+    }
     //verifica o ranking dos jogadores
     public void ranking() {
         File rank1 = new File("rankingFase1.txt");
@@ -66,12 +103,6 @@ public class GameResult extends JFrame {
                 System.out.println(valEmail);
                 System.out.println(email);
 
-                //   if (email.equals(valEmail) && Integer.parseInt(valPonto) == jogo.getPontuacao()) {
-                //     System.out.println("sadasdasdasdas");
-                //   }
-                //else {
-                //escrever arquivo ranking               
-                //FileWriter escreverArquivo = new FileWriter("ranking.txt", true);
                 FileWriter writeFile = new FileWriter(fileName, true);
                 BufferedWriter writeLine = new BufferedWriter(writeFile);
 
@@ -93,13 +124,16 @@ public class GameResult extends JFrame {
                 //retorna total linhas arquivo ranking                
                 LineNumberReader lineCounter = new LineNumberReader(new FileReader(fileName));
                 lineCounter.skip(Long.MAX_VALUE);
-                int numberOfLines = lineCounter.getLineNumber() + 4;
+                int numberOfLines = lineCounter.getLineNumber();
+
+                if(numberOfLines < 5) {
+                    numberOfLines = 5;
+                }
 
                 // array  pontuacao, jogador e login(email) com tamanho definido pelo total de linhas do arquivo
                 Integer[] PlayerPointsList = new Integer[numberOfLines];
                 String[] PlayerNameList = new String[numberOfLines];
                 String[] PlayerLoginList = new String[numberOfLines];
-                System.out.println(numberOfLines);
 
                 //escreve valores nos vetores pontuacao e jogadores                                      
                 int i = 0;
@@ -206,7 +240,6 @@ public class GameResult extends JFrame {
 
     public ArrayList<JComponent> getAllComponents() {
         ArrayList<JComponent> listOfComponents = new ArrayList<JComponent>();
-
 
         totalQuestions = new JLabel();
         JLabel gameCFOP = new JLabel();
@@ -541,6 +574,8 @@ public class GameResult extends JFrame {
         listOfComponents.add(background);
         background.setBounds(0, 0, 1366, 770);
 
+        this.fillFields();
+
         return listOfComponents;
     }
 
@@ -560,7 +595,6 @@ public class GameResult extends JFrame {
         btnNextLvlAchievements.setIcon(img);
 
     }
-//preenche os campos de acertos, erros, pontuacao
 
     private void fillAchievements() {
         totalQuestions.setText(String.valueOf(game.getQuestions() - 1));
@@ -587,34 +621,4 @@ public class GameResult extends JFrame {
             star6.setIcon(estrela);
         }
     }
-
-    JLabel btnNextLvlAchievements;
-    JLabel emailFirstPlace;
-    JLabel emailFourthPlace;
-    JLabel emailFifthPlace;
-    JLabel emailSecondPlace;
-    JLabel emailThirdPlace;
-    JLabel totalPointsBackground;
-    JLabel firstPlaceName;
-    JLabel fourthPlaceName;
-    JLabel fifthPlaceName;
-    JLabel secondPlaceName;
-    JLabel thirdPlaceName;
-    JLabel CorrectPoints;
-    JLabel WrongPoints;
-    JLabel firstPlacePoints;
-    JLabel fourthPlacePoints;
-    JLabel fifthPlacePoints;
-    JLabel secondPlacePoints;
-    JLabel thirdPlacePoints;
-    JLabel star1;
-    JLabel star2;
-    JLabel star3;
-    JLabel star4;
-    JLabel star5;
-    JLabel star6;
-    JLabel QuestionsTitle;
-    JLabel totalQuestions;
-    JLabel totalPoints;
-
 }

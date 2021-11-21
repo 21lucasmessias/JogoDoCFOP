@@ -1,0 +1,2 @@
+1,lucas@hotmail.com,lucas,70
+1,lucas@hotmail.com,lucas,-90

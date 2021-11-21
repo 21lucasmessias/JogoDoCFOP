@@ -8,6 +8,7 @@ import questions.WrongAnswer;
 import utils.Memento;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -87,8 +88,38 @@ public class GameQuestion {
         option2.setText(String.valueOf(answers[1]));
         option3.setText(String.valueOf(answers[2]));
         option4.setText(String.valueOf(answers[3]));
+
+        this.showRightAnswer();
+
         Memento timeLoaded = new Memento(Instant.now());
         addMemento(timeLoaded);
+    }
+
+    private void showRightAnswer() {
+        if(currentQuestion.getRightAnswer() == 1){
+            option1.setBackground(Color.BLUE);
+            option2.setBackground(Color.BLACK);
+            option3.setBackground(Color.BLACK);
+            option4.setBackground(Color.BLACK);
+        }
+        else if(currentQuestion.getRightAnswer() == 2){
+            option2.setBackground(Color.BLUE);
+            option1.setBackground(Color.BLACK);
+            option3.setBackground(Color.BLACK);
+            option4.setBackground(Color.BLACK);
+        }
+        else if(currentQuestion.getRightAnswer() == 3){
+            option3.setBackground(Color.BLUE);
+            option2.setBackground(Color.BLACK);
+            option1.setBackground(Color.BLACK);
+            option4.setBackground(Color.BLACK);
+        }
+        else if(currentQuestion.getRightAnswer() == 4){
+            option4.setBackground(Color.BLUE);
+            option2.setBackground(Color.BLACK);
+            option3.setBackground(Color.BLACK);
+            option1.setBackground(Color.BLACK);
+        }
     }
 
     private void updateInfo() {
@@ -184,6 +215,7 @@ public class GameQuestion {
                 feedback.setVisible(true);
             } else {
                 currentGame.setWrongAnswers(currentGame.getWrongAnswers() + 1);
+                currentGame.setScore(currentGame.getScore() - 30);
                 currentGame.setSeq(0);
                 int lifes = updateLifes();
                 WrongAnswer feedback;
@@ -196,23 +228,29 @@ public class GameQuestion {
                 feedback.setDefaultCloseOperation(WrongAnswer.DO_NOTHING_ON_CLOSE);
                 feedback.setVisible(true);
             }
-            if (currentGame.getQuestions() >= 21 || currentGame.getWrongAnswers() == 3) {
+            if (currentGame.getQuestions() >= 21) {
                 principalMenu();
+            } else if (currentGame.getWrongAnswers() == 3) {
+                Screen.getScreen().setScreen("GameResult");
             }
 
-            // atualiza o level
-            currentGame.setQuestions(currentGame.getQuestions() + 1);
-            if (currentGame.getQuestions() <= 21) {
-                levelState.setText(Integer.toString(currentGame.getQuestions()));
-                if (currentGame.getQuestions() == qntdQuestions + 1) {
-                    btnNextLvl.setEnabled(true);
-                    disableAnswers();
+            if(currentGame.getQuestions() != qntdQuestions){
+                currentGame.setQuestions(currentGame.getQuestions() + 1);
+                if (currentGame.getQuestions() <= 21) {
+                    levelState.setText(Integer.toString(currentGame.getQuestions()));
+                    if (currentGame.getQuestions() == qntdQuestions + 1) {
+                        btnNextLvl.setEnabled(true);
+                        disableAnswers();
+                    }
+                } else {
+                    levelState.setText("?");
                 }
-
             } else {
-                levelState.setText("?");
+                JFrame frame = new JFrame();
+                String qtd = JOptionPane.showInputDialog(frame, "Digite a quantidade de Perguntas!", 8);
+                this.currentGame.setQuestionsQuantity(Integer.parseInt(qtd));
+                this.qntdQuestions = currentGame.getQuestionsQuantity();
             }
-
         } else {
             JOptionPane.showMessageDialog(null, "Resposta Inválida.");
         }

@@ -17,7 +17,7 @@ public class RightAnswer extends JFrame {
 
     public RightAnswer(boolean last) {
         initComponents();
-        if (last == true) {
+        if (last) {
             finish.setText("Você finalizou o jogo!");
         } else {
             MediaPlayer som = new MediaPlayer("src/main/resources/certa.wav");

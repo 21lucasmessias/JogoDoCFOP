@@ -9,7 +9,7 @@ import static utils.ImageUtils.getImage;
 
 public class WrongAnswer extends JFrame {
 
-    private JLabel descricaoCerto;
+    private JLabel finish;
     private JLabel iconeCerto;
     private JLabel jLabel1;
     private JLabel jLabel2;
@@ -23,17 +23,17 @@ public class WrongAnswer extends JFrame {
         initComponents();
     }
 
-    public WrongAnswer(boolean ultima, int vidas) {
-        this.ultima = ultima;
-        this.vidas = vidas;
+    public WrongAnswer(boolean last, int lifes) {
+        this.ultima = last;
+        this.vidas = lifes;
         initComponents();
-        if (ultima == true && vidas > 0) {
-            descricaoCerto.setText("Você finalizou o jogo!");
+        if (last == true && lifes > 0) {
+            finish.setText("Você finalizou o jogo!");
         } else {
             MediaPlayer som = new MediaPlayer("src/main/resources/errada.wav");
             som.play();
-            if (vidas == 0) {
-                descricaoCerto.setText("Você perdeu o jogo!");
+            if (lifes == 0) {
+                finish.setText("Você perdeu o jogo!");
             }
         }
     }
@@ -43,7 +43,7 @@ public class WrongAnswer extends JFrame {
         iconeCerto = new JLabel();
         tituloCerto = new JLabel();
         jLabel2 = new JLabel();
-        descricaoCerto = new JLabel();
+        finish = new JLabel();
         jLabel1 = new JLabel();
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -72,12 +72,12 @@ public class WrongAnswer extends JFrame {
         jPanel1.add(jLabel2);
         jLabel2.setBounds(230, 240, 70, 40);
 
-        descricaoCerto.setFont(new java.awt.Font("Krungthep", 0, 18)); // NOI18N
-        descricaoCerto.setForeground(new java.awt.Color(246, 0, 0));
-        descricaoCerto.setHorizontalAlignment(SwingConstants.CENTER);
-        descricaoCerto.setText("Você errou esta pergunta!");
-        jPanel1.add(descricaoCerto);
-        descricaoCerto.setBounds(0, 190, 400, 30);
+        finish.setFont(new java.awt.Font("Krungthep", 0, 18)); // NOI18N
+        finish.setForeground(new java.awt.Color(246, 0, 0));
+        finish.setHorizontalAlignment(SwingConstants.CENTER);
+        finish.setText("Você errou esta pergunta!");
+        jPanel1.add(finish);
+        finish.setBounds(0, 190, 400, 30);
 
         jLabel1.setIcon(new ImageIcon(getImage("botaoOkErrado.png"))); // NOI18N
         jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
