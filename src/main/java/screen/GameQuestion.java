@@ -199,12 +199,13 @@ public class GameQuestion {
     private void answerQuestion(int option) {
         if (option >= 1 && option <= 4) {
             replyTime = Duration.between(getMemento().getActionTime(), mementos.get(0).getActionTime());
+            currentGame.setQuestions(currentGame.getQuestions() + 1);
             if (currentQuestion.getRightAnswer() == option) {
                 currentGame.setRightAnswers(currentGame.getRightAnswers() + 1);
                 currentGame.setScore(currentGame.getScore() + 80);
                 currentGame.setSeq(currentGame.getSeq() + 1);
 
-                if(currentGame.getQuestions() != qntdQuestions) {
+                if(currentGame.getQuestions() != qntdQuestions + 1) {
                     RightAnswer feedback;
                     feedback = new RightAnswer();
                     feedback.setDefaultCloseOperation(RightAnswer.DO_NOTHING_ON_CLOSE);
@@ -215,7 +216,7 @@ public class GameQuestion {
                 currentGame.setScore(currentGame.getScore() - 30);
                 currentGame.setSeq(0);
                 int lifes = updateLifes();
-                if(currentGame.getQuestions() != qntdQuestions) {
+                if(currentGame.getQuestions() != qntdQuestions + 1) {
                     WrongAnswer feedback;
                     feedback = new WrongAnswer(lifes);
                     feedback.setDefaultCloseOperation(WrongAnswer.DO_NOTHING_ON_CLOSE);
@@ -225,27 +226,26 @@ public class GameQuestion {
 
             if (currentGame.getWrongAnswers() == 3) {
                 Screen.getScreen().setScreen("GameResult");
-            }
-
-            currentGame.setQuestions(currentGame.getQuestions() + 1);
-
-            if(currentGame.getQuestions() != qntdQuestions){
-                levelState.setText(Integer.toString(currentGame.getQuestions()));
-            } else {
-                JFrame frame = new JFrame();
-                int goToResult = JOptionPane.showConfirmDialog(
-                        frame,
-                        "Sessão completada, quantidade de questões finalizadas, deseja continuar jogando adicionando mais 8 questões?",
-                        "Escolha uma opção",
-                        JOptionPane.YES_NO_OPTION
-                );
-
-                if(goToResult == JOptionPane.YES_OPTION){
-                    this.qntdQuestions = currentGame.getQuestionsQuantity() + 8;
+            }else{
+                if(currentGame.getQuestions() != qntdQuestions + 1){
+                    levelState.setText(Integer.toString(currentGame.getQuestions()));
                 } else {
-                    Screen.getScreen().setScreen("GameResult");
+                    JFrame frame = new JFrame();
+                    int goToResult = JOptionPane.showConfirmDialog(
+                            frame,
+                            "Sessão completada, quantidade de questões finalizadas, deseja continuar jogando adicionando mais 8 questões?",
+                            "Escolha uma opção",
+                            JOptionPane.YES_NO_OPTION
+                    );
+                    if(goToResult == JOptionPane.YES_OPTION){
+                        this.qntdQuestions = currentGame.getQuestionsQuantity() + 8;
+                        levelState.setText(Integer.toString(currentGame.getQuestions()));
+                    } else {
+                        Screen.getScreen().setScreen("GameResult");
+                    }
                 }
             }
+
         } else {
             JOptionPane.showMessageDialog(null, "Resposta Inválida.");
         }

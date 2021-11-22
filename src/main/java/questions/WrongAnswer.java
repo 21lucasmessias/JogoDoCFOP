@@ -18,12 +18,12 @@ public class WrongAnswer extends JFrame {
 
     int vidas = 3;
 
-    public WrongAnswer(int lifes) {
+    public WrongAnswer(int lifes){
         this.vidas = lifes;
         initComponents();
+        MediaPlayer som = new MediaPlayer("src/main/resources/errada.wav");
+        som.play();
         if (lifes == 0) {
-            MediaPlayer som = new MediaPlayer("src/main/resources/errada.wav");
-            som.play();
             finish.setText("Você perdeu o jogo!");
         }
     }

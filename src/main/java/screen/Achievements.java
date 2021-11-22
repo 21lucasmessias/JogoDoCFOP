@@ -23,7 +23,6 @@ public class Achievements {
     JLabel star6 = new JLabel();
 
     public Achievements() {
-        fillAchievements();
     }
 
     public ArrayList<JComponent> getAllComponents() {
@@ -184,6 +183,7 @@ public class Achievements {
         listOfComponents.add(background);
         background.setBounds(0, 0, 1366, 770);
 
+        fillAchievements();
         return listOfComponents;
     }
 
