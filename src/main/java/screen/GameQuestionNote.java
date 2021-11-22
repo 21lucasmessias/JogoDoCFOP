@@ -376,7 +376,7 @@ public class GameQuestionNote {
         jLabel2.setForeground(new Color(255, 255, 255));
         jLabel2.setText("/");
         listOfComponents.add(jLabel2);
-        jLabel2.setBounds(1230, 14, 10, 40);
+        jLabel2.setBounds(1235, 14, 10, 40);
 
         uf.setFont(new Font("Tahoma", 0, 18));
         uf.setText("21");

@@ -353,47 +353,47 @@ public class GameQuestion {
         JLabel background = new JLabel();
         JLabel jLabel2 = new JLabel();
 
-        titleLeft.setIcon(new ImageIcon(getImage("title_left.png"))); // NOI18N
+        titleLeft.setIcon(new ImageIcon(getImage("title_left.png")));
         listOfComponents.add(titleLeft);
         titleLeft.setBounds(20, 20, 216, 34);
 
-        lifes.setIcon(new ImageIcon(getImage("3vidas.png"))); // NOI18N
+        lifes.setIcon(new ImageIcon(getImage("3vidas.png")));
         listOfComponents.add(lifes);
         lifes.setBounds(930, 10, 170, 50);
 
-        numberOfQuestions.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
+        numberOfQuestions.setFont(new java.awt.Font("Roboto", 1, 24));
         numberOfQuestions.setForeground(new java.awt.Color(255, 255, 255));
         numberOfQuestions.setText("20");
         listOfComponents.add(numberOfQuestions);
         numberOfQuestions.setBounds(1250, 10, 40, 50);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24));
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("/");
         listOfComponents.add(jLabel1);
-        jLabel1.setBounds(1230, 10, 14, 50);
+        jLabel1.setBounds(1235, 10, 14, 50);
 
-        truckIcon.setIcon(new ImageIcon(getImage("truck.png"))); // NOI18N
+        truckIcon.setIcon(new ImageIcon(getImage("truck.png")));
         listOfComponents.add(truckIcon);
         truckIcon.setBounds(330, 160, 80, 60);
 
-        tituloDados.setFont(new java.awt.Font("Krungthep", 0, 14)); // NOI18N
+        tituloDados.setFont(new java.awt.Font("Krungthep", 0, 14));
         tituloDados.setForeground(new java.awt.Color(255, 255, 255));
         tituloDados.setText("DADOS DA NOTA");
         listOfComponents.add(tituloDados);
         tituloDados.setBounds(320, 230, 118, 20);
 
-        fundoTituloDados.setIcon(new ImageIcon(getImage("fundoTituloDados.png"))); // NOI18N
+        fundoTituloDados.setIcon(new ImageIcon(getImage("fundoTituloDados.png")));
         listOfComponents.add(fundoTituloDados);
         fundoTituloDados.setBounds(290, 230, 158, 23);
 
-        operacaoTitulo.setFont(new java.awt.Font("Krungthep", 0, 18)); // NOI18N
+        operacaoTitulo.setFont(new java.awt.Font("Krungthep", 0, 18));
         operacaoTitulo.setForeground(new java.awt.Color(9, 0, 108));
         operacaoTitulo.setText("OPERAÇÃO");
         listOfComponents.add(operacaoTitulo);
         operacaoTitulo.setBounds(140, 290, 190, 24);
 
-        inputOperation.setFont(new java.awt.Font("Krungthep", 0, 18)); // NOI18N
+        inputOperation.setFont(new java.awt.Font("Krungthep", 0, 18));
         inputOperation.setForeground(new java.awt.Color(142, 142, 142));
         inputOperation.setHorizontalAlignment(SwingConstants.RIGHT);
         inputOperation.setText("OPERAÇÃO");
@@ -405,13 +405,13 @@ public class GameQuestion {
         listOfComponents.add(inputOperation);
         inputOperation.setBounds(342, 290, 240, 24);
 
-        cidadeTitulo.setFont(new java.awt.Font("Krungthep", 0, 18)); // NOI18N
+        cidadeTitulo.setFont(new java.awt.Font("Krungthep", 0, 18));
         cidadeTitulo.setForeground(new java.awt.Color(9, 0, 108));
         cidadeTitulo.setText("CIDADE EMISSORA");
         listOfComponents.add(cidadeTitulo);
         cidadeTitulo.setBounds(140, 360, 190, 20);
 
-        townInput.setFont(new java.awt.Font("Krungthep", 0, 18)); // NOI18N
+        townInput.setFont(new java.awt.Font("Krungthep", 0, 18));
         townInput.setForeground(new java.awt.Color(142, 142, 142));
         townInput.setHorizontalAlignment(SwingConstants.RIGHT);
         townInput.setText("CIDADE/UF");
@@ -419,13 +419,13 @@ public class GameQuestion {
         listOfComponents.add(townInput);
         townInput.setBounds(342, 360, 240, 24);
 
-        remetenteTitulo.setFont(new java.awt.Font("Krungthep", 0, 18)); // NOI18N
+        remetenteTitulo.setFont(new java.awt.Font("Krungthep", 0, 18));
         remetenteTitulo.setForeground(new java.awt.Color(9, 0, 108));
         remetenteTitulo.setText("REMETENTE");
         listOfComponents.add(remetenteTitulo);
         remetenteTitulo.setBounds(140, 470, 180, 20);
 
-        senderInput.setFont(new java.awt.Font("Krungthep", 0, 18)); // NOI18N
+        senderInput.setFont(new java.awt.Font("Krungthep", 0, 18));
         senderInput.setForeground(new java.awt.Color(142, 142, 142));
         senderInput.setHorizontalAlignment(SwingConstants.RIGHT);
         senderInput.setText("CIDADE/UF");
@@ -433,13 +433,13 @@ public class GameQuestion {
         listOfComponents.add(senderInput);
         senderInput.setBounds(342, 470, 240, 24);
 
-        destinatarioTitulo.setFont(new java.awt.Font("Krungthep", 0, 18)); // NOI18N
+        destinatarioTitulo.setFont(new java.awt.Font("Krungthep", 0, 18));
         destinatarioTitulo.setForeground(new java.awt.Color(9, 0, 108));
         destinatarioTitulo.setText("DESTINATÁRIO");
         listOfComponents.add(destinatarioTitulo);
         destinatarioTitulo.setBounds(140, 540, 180, 20);
 
-        receiverInput.setFont(new java.awt.Font("Krungthep", 0, 18)); // NOI18N
+        receiverInput.setFont(new java.awt.Font("Krungthep", 0, 18));
         receiverInput.setForeground(new java.awt.Color(142, 142, 142));
         receiverInput.setHorizontalAlignment(SwingConstants.RIGHT);
         receiverInput.setText("CIDADE/UF");
@@ -447,19 +447,19 @@ public class GameQuestion {
         listOfComponents.add(receiverInput);
         receiverInput.setBounds(342, 540, 240, 24);
 
-        fundoDados.setIcon(new ImageIcon(getImage("fundoDados.png"))); // NOI18N
+        fundoDados.setIcon(new ImageIcon(getImage("fundoDados.png")));
         listOfComponents.add(fundoDados);
         fundoDados.setBounds(100, 140, 520, 500);
 
         levelInput.setBackground(new java.awt.Color(255, 255, 255));
-        levelInput.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
+        levelInput.setFont(new java.awt.Font("Roboto", 1, 24));
         levelInput.setForeground(new java.awt.Color(255, 255, 255));
         levelInput.setHorizontalAlignment(SwingConstants.CENTER);
         levelInput.setText("LEVEL:");
         listOfComponents.add(levelInput);
         levelInput.setBounds(1120, 10, 110, 50);
 
-        levelState.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
+        levelState.setFont(new java.awt.Font("Roboto", 1, 24));
         levelState.setForeground(new java.awt.Color(255, 255, 255));
         levelState.setHorizontalAlignment(SwingConstants.CENTER);
         levelState.setText("1");
@@ -467,27 +467,27 @@ public class GameQuestion {
         listOfComponents.add(levelState);
         levelState.setBounds(1190, 10, 70, 50);
 
-        fundoLevel.setIcon(new ImageIcon(getImage("fundoLevel.png"))); // NOI18N
+        fundoLevel.setIcon(new ImageIcon(getImage("fundoLevel.png")));
         listOfComponents.add(fundoLevel);
         fundoLevel.setBounds(1120, 10, 170, 46);
 
-        trofeu.setIcon(new ImageIcon(getImage("trofeu.png"))); // NOI18N
+        trofeu.setIcon(new ImageIcon(getImage("trofeu.png")));
         listOfComponents.add(trofeu);
         trofeu.setBounds(1310, 10, 46, 50);
 
-        questionTitle.setFont(new java.awt.Font("Krungthep", 0, 24)); // NOI18N
+        questionTitle.setFont(new java.awt.Font("Krungthep", 0, 24));
         questionTitle.setForeground(new java.awt.Color(255, 255, 255));
         questionTitle.setHorizontalAlignment(SwingConstants.CENTER);
         questionTitle.setText("TITULO PERGUNTA");
         listOfComponents.add(questionTitle);
         questionTitle.setBounds(730, 160, 550, 32);
 
-        fundoPergunta.setIcon(new ImageIcon(getImage("tituloPergunta.png"))); // NOI18N
+        fundoPergunta.setIcon(new ImageIcon(getImage("tituloPergunta.png")));
         listOfComponents.add(fundoPergunta);
         fundoPergunta.setBounds(730, 150, 550, 50);
 
         option1.setBackground(new java.awt.Color(255, 255, 255));
-        option1.setFont(new java.awt.Font("Roboto", 0, 36)); // NOI18N
+        option1.setFont(new java.awt.Font("Roboto", 0, 36));
         option1.setText("option1");
         option1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -498,7 +498,7 @@ public class GameQuestion {
         option1.setBounds(740, 240, 540, 60);
 
         option2.setBackground(new java.awt.Color(255, 255, 255));
-        option2.setFont(new java.awt.Font("Roboto", 0, 36)); // NOI18N
+        option2.setFont(new java.awt.Font("Roboto", 0, 36));
         option2.setText("option2");
         option2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -509,7 +509,7 @@ public class GameQuestion {
         option2.setBounds(740, 320, 540, 60);
 
         option3.setBackground(new java.awt.Color(255, 255, 255));
-        option3.setFont(new java.awt.Font("Roboto", 0, 36)); // NOI18N
+        option3.setFont(new java.awt.Font("Roboto", 0, 36));
         option3.setText("option3");
         option3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -520,7 +520,7 @@ public class GameQuestion {
         option3.setBounds(740, 400, 540, 60);
 
         option4.setBackground(new java.awt.Color(255, 255, 255));
-        option4.setFont(new java.awt.Font("Roboto", 0, 36)); // NOI18N
+        option4.setFont(new java.awt.Font("Roboto", 0, 36));
         option4.setText("option4");
         option4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -530,13 +530,13 @@ public class GameQuestion {
         listOfComponents.add(option4);
         option4.setBounds(740, 480, 540, 60);
 
-        madeText.setFont(new java.awt.Font("Krungthep", 0, 18)); // NOI18N
+        madeText.setFont(new java.awt.Font("Krungthep", 0, 18));
         madeText.setForeground(new java.awt.Color(255, 255, 255));
         madeText.setText("FEITO POR CESAR VERGARA");
         listOfComponents.add(madeText);
         madeText.setBounds(20, 730, 260, 30);
 
-        btnSair.setIcon(new ImageIcon(getImage("botaoSairBottom.png"))); // NOI18N
+        btnSair.setIcon(new ImageIcon(getImage("botaoSairBottom.png")));
         btnSair.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnLeaveMouseClicked(evt);
@@ -545,10 +545,10 @@ public class GameQuestion {
         listOfComponents.add(btnSair);
         btnSair.setBounds(1170, 710, 180, 45);
 
-        btnNextLvl.setIcon(new ImageIcon(getImage("botaoResultadoe.png"))); // NOI18N
+        btnNextLvl.setIcon(new ImageIcon(getImage("botaoResultadoe.png")));
         btnNextLvl.setText("btnProxiFase");
         btnNextLvl.setEnabled(false);
-        btnNextLvl.setName(""); // NOI18N
+        btnNextLvl.setName("");
         btnNextLvl.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnNextLvlMouseClicked(evt);
@@ -559,7 +559,7 @@ public class GameQuestion {
         btnNextLvl.getAccessibleContext().setAccessibleName("");
         btnNextLvl.getAccessibleContext().setAccessibleDescription("");
 
-        background.setIcon(new ImageIcon(getImage("fundo_sistema.jpg"))); // NOI18N
+        background.setIcon(new ImageIcon(getImage("fundo_sistema.jpg")));
         background.setText("sdaa");
         listOfComponents.add(background);
         background.setBounds(0, 0, 1392, 770);
