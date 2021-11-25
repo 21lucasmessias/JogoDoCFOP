@@ -44,11 +44,7 @@ public class Screen extends JFrame {
                 gameQuestionNoteScreen.getAllComponents().forEach(component -> this.mainPanel.add(component));
                 break;
             }
-            case "GameResult": {
-                GameResult gameResultScreen = new GameResult((boolean) argument);
-                gameResultScreen.getAllComponents().forEach(component -> this.mainPanel.add(component));
-                break;
-            }
+
 
             default: {
                 throw new IllegalStateException("Unexpected value: " + nameOfScreen);
@@ -101,6 +97,11 @@ public class Screen extends JFrame {
             case "GameResult": {
                 GameResult gameResultScreen = new GameResult();
                 gameResultScreen.getAllComponents().forEach(component -> this.mainPanel.add(component));
+                break;
+            }
+            case "Ranking": {
+                Ranking rankingScreen = new Ranking();
+                rankingScreen.getAllComponents().forEach(component -> this.mainPanel.add(component));
                 break;
             }
 

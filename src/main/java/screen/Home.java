@@ -78,7 +78,7 @@ public class Home {
     }
 
     private void btnRankingMouseClicked(java.awt.event.MouseEvent evt) {
-        Screen.getScreen().setScreen("GameResult", true);
+        Screen.getScreen().setScreen("Ranking");
     }
 
 
@@ -98,7 +98,7 @@ public class Home {
         listOfComponents.add(gameCFOP);
         gameCFOP.setBounds(320, 20, 730, 130);
 
-        buttonRanking.setIcon(new ImageIcon(getImage("botaoResultadoe.png")));
+        buttonRanking.setIcon(new ImageIcon(getImage("botaoRanking.png")));
         buttonRanking.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnRankingMouseClicked(evt);
